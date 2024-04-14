@@ -25,7 +25,7 @@ public class RoomController : MonoBehaviour
     void Update()
     {
         //Just for debugging purpose
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.Q))
             SwapRooms = true;
         
         if (SwapRooms && _manager1.activeSelf)
