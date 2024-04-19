@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float moveSpeed = 5;
+    public float moveSpeed = 5f;
 
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -21,5 +20,4 @@ public class Player : MonoBehaviour
         transform.position += moveX * moveSpeed * Time.deltaTime;
         transform.position += moveY * moveSpeed * Time.deltaTime;
     }
-
 }

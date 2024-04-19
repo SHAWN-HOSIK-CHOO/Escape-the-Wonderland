@@ -5,8 +5,6 @@ using TMPro;
 
 public class HitBox : MonoBehaviour
 {
-    public float moveSpeed = 1f;
-
     private Hit hit;
 
     private HitBoxSpawner spawner;
@@ -24,7 +22,7 @@ public class HitBox : MonoBehaviour
     {
         Vector3 toSmall = new Vector3(-1f, -1f, 0f);
 
-        transform.localScale += toSmall * moveSpeed * Time.unscaledDeltaTime;
+        transform.localScale += toSmall * GameManager.instance.hitBoxMoveSpeed * Time.unscaledDeltaTime;
 
         transform.position = player.transform.position;
 
@@ -33,12 +31,12 @@ public class HitBox : MonoBehaviour
                 Destroy(gameObject);
                 GameManager.instance.isreinforced = true;
                 spawner.StopMeditation();
-                spawner.count = 0;
+                GameManager.instance.stylishPoint++;
                 hit.SetCriticalText("Critical Hit");
             } else {
                 Destroy(gameObject);
                 spawner.StopMeditation();
-                spawner.count = 0;
+                GameManager.instance.stylishPoint -= 0.5f;
                 hit.SetCriticalText("Miss");
             }
         }
@@ -46,6 +44,8 @@ public class HitBox : MonoBehaviour
 
         if (gameObject.transform.localScale.x < 0) {
             Destroy(gameObject);
+            spawner.StopMeditation();
+            GameManager.instance.stylishPoint -= 0.5f;
             hit.SetCriticalText("Miss");
         }
     }
