@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,35 +8,54 @@ using Unity.VisualScripting;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
-
-    [SerializeField] public bool           isreinforced = false;
-    [SerializeField] public GameObject     bspMapGenerator;
-    [SerializeField] public GameObject     monsterGenerator;
-    [SerializeField] public GameObject     ccamera;
-    [SerializeField] public GameObject     player;
-     private                 RoomDungeonGen _roomDungeonGen;
-     private                 MonsterPcg     _monsterPcg;
+    public static MapManager  SMapManager;
+    public static GameObject  SPlayer;
     
+    [SerializeField] public GameObject      player;
+    [SerializeField] public GameObject      GOMapManager;
     
     void Awake() {
         if (instance == null) {
             instance = this;
         }
+        SPlayer     = player;
+        SMapManager = GOMapManager.GetComponent<MapManager>();
+        
+        SMapManager.Init();
+        SMapManager.playerLocation = ePlayerLocation.Base;
     }
 
     void Start()
     {
-        _roomDungeonGen = bspMapGenerator.GetComponent<RoomDungeonGen>();
-        _roomDungeonGen.GenerateDungeon();
-        player.transform.position = new Vector3(_roomDungeonGen.playerStartPos.x, _roomDungeonGen.playerStartPos.y, -10);
-        ccamera.transform.position = player.transform.position;
-
-        _monsterPcg = monsterGenerator.GetComponent<MonsterPcg>();
-        _monsterPcg.ProceduralGenMonsters();
+        //TODO: Get Previous Location () 같은 함수로 저장된 상태를 불러오도록 해야함
+        SMapManager.GenerateMapAndPlaceCharacter(ePlayerLocation.Dungeon0);
     }
 
-    void Update()
+    private void Update()
     {
-        
+        //Debug Codes
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            SMapManager.GenerateMapAndPlaceCharacter(ePlayerLocation.Boss1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            SMapManager.GenerateMapAndPlaceCharacter(ePlayerLocation.Base);
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            //중요!!! Clear 반드시 해줘야 함 아니면 충돌 발생
+            SMapManager.roomDungeonGen.placeablePositions.Clear();
+            SMapManager.roomDungeonGen.allWallPositions.Clear();
+            SMapManager.GenerateMapAndPlaceCharacter(ePlayerLocation.Dungeon2);
+        }
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            SMapManager.GenerateMapAndPlaceCharacter(ePlayerLocation.Boss2);
+        }
+        // Debug Codes end
     }
 }

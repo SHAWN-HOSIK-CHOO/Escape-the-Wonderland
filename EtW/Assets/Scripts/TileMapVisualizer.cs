@@ -11,13 +11,33 @@ using UnityEngine.Tilemaps;
 
 public class TileMapVisualizer : MonoBehaviour
 {
-   [SerializeField] private Tilemap  _floorTileMap, _wallTileMap;
+   [SerializeField] private Tilemap        _floorTileMap, _wallTileMap;
+   [SerializeField] public  TileBase[] floorTiles = new TileBase[4];
    [SerializeField] private TileBase _floorTile, _wallTile, _wallSideRightTile, _wallSideLeftTile, _wallBottomTile, _wallFullTile,
-      _wallInnerCornerDownLeftTile, _wallInnerCornerDownRightTile, _wallDiagonalCornerDownLeftTile, _wallDiagonalCornerDownRightTile, 
-      _wallDiagonalCornerUpLeftTile, _wallDiagonalCornerUpRightTile;
+                                     _wallInnerCornerDownLeftTile, _wallInnerCornerDownRightTile, _wallDiagonalCornerDownLeftTile, _wallDiagonalCornerDownRightTile, 
+                                     _wallDiagonalCornerUpLeftTile, _wallDiagonalCornerUpRightTile;
 
-   public void PaintFloorTiles(IEnumerable<Vector2Int> floorPositions)
+   public void PaintFloorTiles(IEnumerable<Vector2Int> floorPositions, ePlayerLocation dungeonNumber)
    {
+      switch (dungeonNumber)
+      {
+         case ePlayerLocation.Dungeon0:
+            _floorTile = floorTiles[0];
+            break;
+         case ePlayerLocation.Dungeon1:
+            _floorTile = floorTiles[1];
+            break;
+         case ePlayerLocation.Dungeon2:
+            _floorTile = floorTiles[2];
+            break;
+         case ePlayerLocation.Dungeon3:
+            _floorTile = floorTiles[3];
+            break;
+         default:
+            Debug.Log("Undefined Dungeon, Called from TileMapVisualizer.PaintFloorTiles");
+            break;
+      }
+      
       PaintTiles(floorPositions, _floorTileMap, _floorTile);
    }
 

@@ -17,9 +17,9 @@ public class AbstractDungeonGenEditor : Editor
    public override void OnInspectorGUI()
    {
       base.OnInspectorGUI();
-      if (GUILayout.Button("Create Dungeon"))
+      if (GUILayout.Button("Create Dungeon0"))
       {
-         generator.GenerateDungeon();
+         generator.GenerateDungeon(ePlayerLocation.Dungeon0);
       }
    }
 }

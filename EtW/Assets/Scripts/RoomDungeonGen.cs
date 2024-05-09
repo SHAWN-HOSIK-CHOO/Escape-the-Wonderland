@@ -16,15 +16,34 @@ public class RoomDungeonGen : SimpleRandomWalkMapGen
     [SerializeField] [Range(0, 10)] private int                               _offset          = 1;
     [SerializeField]                public  Vector2Int                        playerStartPos;
 
-    public Dictionary<Vector2Int, HashSet<Vector2Int>> placeablePositions { get; set; } = new();
-    public HashSet<Vector2Int>                         allWallPositions;
+    [SerializeField] public Color[]                                     dungeonColors = new Color[4];
+    public                  Dictionary<Vector2Int, HashSet<Vector2Int>> placeablePositions { get; set; } = new();
+    public                  HashSet<Vector2Int>                         allWallPositions;
     
-    protected override void RunProceduralGen()
+    protected override void RunProceduralGen(ePlayerLocation dungeonNumber)
     {
-        CreateRooms();
+        switch (dungeonNumber)
+        {
+            case ePlayerLocation.Dungeon0:
+                Camera.main.backgroundColor = dungeonColors[0];
+                break;
+            case ePlayerLocation.Dungeon1:
+                Camera.main.backgroundColor = dungeonColors[1];
+                break;
+            case ePlayerLocation.Dungeon2:
+                Camera.main.backgroundColor = dungeonColors[2];
+                break;
+            case ePlayerLocation.Dungeon3:
+                Camera.main.backgroundColor = dungeonColors[3];
+                break;
+            default:
+                Debug.Log("Unknown Dungeon Number, Called from RoomDungeonGen.RunProceduralGen");
+                break;
+        }
+        CreateRooms(dungeonNumber);
     }
     
-    private void CreateRooms()
+    private void CreateRooms(ePlayerLocation dungeonNumber)
     {
         var roomList =
             ProceduralRoomGen
@@ -48,7 +67,7 @@ public class RoomDungeonGen : SimpleRandomWalkMapGen
         HashSet<Vector2Int> corridors = ConnectRooms(roomCentres);
         floor.UnionWith(corridors);
         
-        _tileMapVisualizer.PaintFloorTiles(floor);
+        _tileMapVisualizer.PaintFloorTiles(floor, dungeonNumber);
         allWallPositions = WallGen.CreateWalls(floor,_tileMapVisualizer);
         
         EliminateFloorsNearWall();
@@ -68,7 +87,7 @@ public class RoomDungeonGen : SimpleRandomWalkMapGen
                 if(position.x >= (roomBounds.xMin + _offset) && position.x <= (roomBounds.xMax - _offset) && position.y >= (roomBounds.yMin - _offset) && position.y <= (roomBounds.yMax - _offset))
                 {
                     floor.Add(position);
-                    if (Random.value > 0.8f)
+                    if (Random.value > 0.4f)
                         thisFloor.Add(position);
                 }
             }
@@ -85,15 +104,21 @@ public class RoomDungeonGen : SimpleRandomWalkMapGen
         {
             for (int i = room.Value.Count - 1; i >= 0; i--)
             {
+                HashSet<Vector2Int> floorsToEliminate = new HashSet<Vector2Int>();
                 foreach (var dir in Direction2D.eightDirList)
                 {
-                    var        curPos      = room.Value.ElementAt(i);
-                    Vector2Int neighborPos = curPos + dir;
+                    var                 curPos            = room.Value.ElementAt(i);
+                    Vector2Int          neighborPos       = curPos + dir;
                     if (allWallPositions.Contains(neighborPos))
                     {
-                        room.Value.Remove(curPos);
-                        break;
+                        floorsToEliminate.Add(neighborPos);
+                        floorsToEliminate.Add(curPos);
                     }
+                }
+
+                foreach (var target in floorsToEliminate)
+                {
+                    room.Value.Remove(target);
                 }
             }
         }
@@ -171,24 +196,5 @@ public class RoomDungeonGen : SimpleRandomWalkMapGen
         
         return closest;
     }
-
-    /*
-    private HashSet<Vector2Int> CreateSimpleRooms(List<BoundsInt> roomList)
-    {
-        HashSet<Vector2Int> floor = new HashSet<Vector2Int>();
-        foreach (var room  in roomList)
-        {
-            for (int col = _offset; col < room.size.x - _offset; col++)
-            {
-                for (int row = _offset; row < room.size.y - _offset; row++)
-                {
-                    Vector2Int pos = (Vector2Int)room.min + new Vector2Int(col, row);
-                    floor.Add(pos);
-                }
-            }
-        }
-
-        return floor;
-    }
-    */
+    
 }

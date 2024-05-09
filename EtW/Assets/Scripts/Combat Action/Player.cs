@@ -1,24 +1,28 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float moveSpeed = 5;
+    public  float       moveSpeed = 3.0f;
+    private Rigidbody2D _rigidbody2D;
+    private Vector2     _moveAmount;
 
+    // Start is called before the first frame update
     void Start()
-    {
+    { 
     }
-
+    // Update is called once per frame
     // Update is called once per frame
     void Update()
     {
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        float verticalInput = Input.GetAxisRaw("Vertical");
-        Vector3 moveX = new Vector3(horizontalInput, 0f, 0f);
-        Vector3 moveY = new Vector3(0f, verticalInput, 0f);
-        transform.position += moveX * moveSpeed * Time.deltaTime;
-        transform.position += moveY * moveSpeed * Time.deltaTime;
+        float   horizontal = Input.GetAxis("Horizontal");
+        float   vertical   = Input.GetAxis("Vertical");
+        Vector2 position   = transform.position;
+        position.x         = position.x + moveSpeed * horizontal * Time.deltaTime;
+        position.y         = position.y + moveSpeed * vertical   * Time.deltaTime;
+        transform.position = position;
     }
-
+    
 }

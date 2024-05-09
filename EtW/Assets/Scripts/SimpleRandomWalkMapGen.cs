@@ -10,11 +10,11 @@ using UnityEngine;
 public class SimpleRandomWalkMapGen : AbstractDungeonGen
 {
    [SerializeField] protected RandomWalkSO _randomWalkSO;
-   protected override void RunProceduralGen()
+   protected override void RunProceduralGen(ePlayerLocation dungeonNumber)
    {
       HashSet<Vector2Int> floorPos = RunRandomWalk(_randomWalkSO, _startPos);
       _tileMapVisualizer.Clear();
-      _tileMapVisualizer.PaintFloorTiles(floorPos);
+      _tileMapVisualizer.PaintFloorTiles(floorPos, dungeonNumber);
       WallGen.CreateWalls(floorPos,_tileMapVisualizer);
    }
 
