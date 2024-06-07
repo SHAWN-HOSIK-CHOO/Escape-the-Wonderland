@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     private SpriteRenderer playerSpriteRenderer;
     private BoxCollider2D plyaerCollider;
     private Skill skill;
+    private Player player;
 
     public bool isLeft = false;
     public float moveSpeed = 10f;
@@ -78,29 +79,29 @@ public class Player : MonoBehaviour
             playerCurrentMp = playerMaxMp;
         }
 
-        if (Input.GetKey(KeyCode.RightArrow)) {
-            isLeft = false;
-            playerSpriteRenderer.flipX = false;
-            animator.SetTrigger("move");
-        }
+        // if (Input.GetKey(KeyCode.RightArrow)) {
+        //     isLeft = false;
+        //     playerSpriteRenderer.flipX = false;
+        //     animator.SetTrigger("move");
+        // }
 
-        if (Input.GetKey(KeyCode.LeftArrow)) {
-            isLeft = true;
-            playerSpriteRenderer.flipX = true;
-            animator.SetTrigger("move");
-        }
+        // if (Input.GetKey(KeyCode.LeftArrow)) {
+        //     isLeft = true;
+        //     playerSpriteRenderer.flipX = true;
+        //     animator.SetTrigger("move");
+        // }
         
-        if (Input.GetKey(KeyCode.UpArrow)) {
-            animator.SetTrigger("move");
-        }
+        // if (Input.GetKey(KeyCode.UpArrow)) {
+        //     animator.SetTrigger("move");
+        // }
 
-        if (Input.GetKey(KeyCode.DownArrow)) {
-            animator.SetTrigger("move");
-        }
+        // if (Input.GetKey(KeyCode.DownArrow)) {
+        //     animator.SetTrigger("move");
+        // }
 
-        if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.DownArrow)) {
-            animator.SetBool("move", false);
-        }
+        // if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.DownArrow)) {
+        //     animator.SetBool("move", false);
+        // }
 
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("move")) {
             if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1) {
@@ -127,10 +128,26 @@ public class Player : MonoBehaviour
         // Vector3 moveY = new Vector3(0f, verticalInput, 0f);
         // transform.position += moveY * moveSpeed * Time.deltaTime;
 
-        vector.x = Input.GetAxisRaw("Horizontal");
-        vector.y = Input.GetAxisRaw("Vertical");
+        // vector.x = Input.GetAxisRaw("Horizontal");
+        // vector.y = Input.GetAxisRaw("Vertical");
 
-        playerRigidbody.velocity = vector.normalized * moveSpeed;
+        // playerRigidbody.velocity = vector.normalized * moveSpeed;
+
+        float deltaX = Input.GetAxis("Horizontal");
+        float deltaY = Input.GetAxis("Vertical");
+
+        Vector3 velocity = Vector3.zero;
+        velocity.x            = deltaX;
+        velocity.y            = deltaY;
+        playerRigidbody.velocity = velocity * moveSpeed;
+
+        if (velocity.x != 0.0f)
+        {
+            bool flipped = velocity.x < 0.0f;
+            this.transform.rotation = Quaternion.Euler(new Vector3(0.0f, ( flipped ? 180.0f : 0.0f ), 0.0f));
+        }
+
+        animator.SetFloat("Speed",Mathf.Abs(velocity.magnitude * moveSpeed));
     }
 
 

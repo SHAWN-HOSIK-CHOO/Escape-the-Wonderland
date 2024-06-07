@@ -73,8 +73,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 11750261
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 362749242, guid: 12d50888b6cb4394abd396471509fae0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -138,8 +138,8 @@ MonoBehaviour:
   moveSpeed: 3
   rotateSpeed: 10
   fiedlOfVision: 15
-  isHit: 0
   enemyATK: 4
+  isHit: 0
 --- !u!50 &6899111492180452366
 Rigidbody2D:
   serializedVersion: 4
