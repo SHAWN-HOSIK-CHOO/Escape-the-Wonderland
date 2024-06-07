@@ -30,7 +30,7 @@ public class PlayerManager : MonoBehaviour
     private float _realTimer = 1f;
     private bool _pausePanelOpen = false;
     private bool _statusPanelOpen = false;
-    private int test = 0;
+    
 
     [SerializeField]
     private TextMeshProUGUI stylishRank;
