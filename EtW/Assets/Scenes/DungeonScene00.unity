@@ -39585,17 +39585,37 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -6832922076518561683, guid: 7b61e49b4f795d84caacd37da6e358b8, type: 3}
+      propertyPath: moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 154101127239267266, guid: 7b61e49b4f795d84caacd37da6e358b8, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 154101127239267266, guid: 7b61e49b4f795d84caacd37da6e358b8, type: 3}
+      propertyPath: m_AngularDrag
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2091693649690919687, guid: 7b61e49b4f795d84caacd37da6e358b8, type: 3}
       propertyPath: critical
       value: 
       objectReference: {fileID: 758003079}
     - target: {fileID: 2149228910830976018, guid: 7b61e49b4f795d84caacd37da6e358b8, type: 3}
+      propertyPath: m_Size.x
+      value: 0.7122309
+      objectReference: {fileID: 0}
+    - target: {fileID: 2149228910830976018, guid: 7b61e49b4f795d84caacd37da6e358b8, type: 3}
       propertyPath: m_Size.y
-      value: 0.7734157
+      value: 0.8124121
+      objectReference: {fileID: 0}
+    - target: {fileID: 2149228910830976018, guid: 7b61e49b4f795d84caacd37da6e358b8, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.2624954
       objectReference: {fileID: 0}
     - target: {fileID: 2149228910830976018, guid: 7b61e49b4f795d84caacd37da6e358b8, type: 3}
       propertyPath: m_Offset.y
-      value: -0.060779855
+      value: -0.24796256
       objectReference: {fileID: 0}
     - target: {fileID: 2242584623267999900, guid: 7b61e49b4f795d84caacd37da6e358b8, type: 3}
       propertyPath: m_Name
@@ -46424,10 +46444,10 @@ MonoBehaviour:
   LVP: 0
   tempLVP: 0
   SP: 0
-  playerStatATK: 0
-  playerStatDEF: 0
-  playerStatHP: 0
-  playerStatMP: 0
+  playerStatATK: 1
+  playerStatDEF: 1
+  playerStatHP: 10
+  playerStatMP: 10
   enemySpeed: 1
   checkHit: 0
   gameOver: 0

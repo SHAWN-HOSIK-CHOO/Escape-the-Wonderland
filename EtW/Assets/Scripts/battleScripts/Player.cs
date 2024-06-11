@@ -6,12 +6,11 @@ public class Player : MonoBehaviour
 {
     [SerializeField]
     private Animator animator;
-    private Rigidbody2D playerRigidbody;
-    private Vector2 vector;
-    private SpriteRenderer playerSpriteRenderer;
-    private BoxCollider2D plyaerCollider;
-    private Skill skill;
-    private Player player;
+    private Rigidbody2D _playerRigidbody;
+    private Vector2 _vector;
+    private SpriteRenderer _playerSpriteRenderer;
+    private BoxCollider2D _playerCollider;
+    private Skill _skill;
 
     public bool isLeft = false;
     public float moveSpeed = 10f;
@@ -26,26 +25,18 @@ public class Player : MonoBehaviour
     private bool _isHit = false;
 
     private void Awake() {
-        playerSpriteRenderer = GetComponent<SpriteRenderer>();
-        playerRigidbody = GetComponent<Rigidbody2D>();
-        plyaerCollider = GetComponent<BoxCollider2D>();
-        skill = GetComponent<Skill>();
-
-        playerMaxHp = PlayerManager.instance.playerStatHP;
-        playerCurrentHp = playerMaxHp;
-        playerMaxMp = PlayerManager.instance.playerStatMP;
-        playerCurrentMp = playerMaxMp;
-        playerATK = PlayerManager.instance.playerStatATK;
-        playerDEF = PlayerManager.instance.playerStatDEF;
-        StartCoroutine("MPRegeneration");
+        _playerSpriteRenderer = GetComponent<SpriteRenderer>();
+        _playerRigidbody = GetComponent<Rigidbody2D>();
+        _playerCollider = GetComponent<BoxCollider2D>();
+        _skill = GetComponent<Skill>();
     }
 
     void Start()
     {
-        playerSpriteRenderer = GetComponent<SpriteRenderer>();
-        playerRigidbody = GetComponent<Rigidbody2D>();
-        plyaerCollider = GetComponent<BoxCollider2D>();
-        skill = GetComponent<Skill>();
+        _playerSpriteRenderer = GetComponent<SpriteRenderer>();
+        _playerRigidbody = GetComponent<Rigidbody2D>();
+        _playerCollider = GetComponent<BoxCollider2D>();
+        _skill = GetComponent<Skill>();
 
         playerMaxHp = PlayerManager.instance.playerStatHP;
         playerCurrentHp = playerMaxHp;
@@ -78,31 +69,7 @@ public class Player : MonoBehaviour
         if (playerCurrentMp > playerMaxMp) {
             playerCurrentMp = playerMaxMp;
         }
-
-        // if (Input.GetKey(KeyCode.RightArrow)) {
-        //     isLeft = false;
-        //     playerSpriteRenderer.flipX = false;
-        //     animator.SetTrigger("move");
-        // }
-
-        // if (Input.GetKey(KeyCode.LeftArrow)) {
-        //     isLeft = true;
-        //     playerSpriteRenderer.flipX = true;
-        //     animator.SetTrigger("move");
-        // }
         
-        // if (Input.GetKey(KeyCode.UpArrow)) {
-        //     animator.SetTrigger("move");
-        // }
-
-        // if (Input.GetKey(KeyCode.DownArrow)) {
-        //     animator.SetTrigger("move");
-        // }
-
-        // if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.DownArrow)) {
-        //     animator.SetBool("move", false);
-        // }
-
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("move")) {
             if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1) {
                 animator.SetBool("idle", true);
@@ -111,8 +78,8 @@ public class Player : MonoBehaviour
 
         if (_isHit) {
             if (_godModeTimer <= 0f) {
-                plyaerCollider.enabled = true;
-                playerSpriteRenderer.color = new Color(1, 1, 1, 1);
+                _playerCollider.enabled = true;
+                _playerSpriteRenderer.color = new Color(1, 1, 1, 1);
                 _godModeTimer = 1f;
                 _isHit = false;
             } else {
@@ -120,26 +87,13 @@ public class Player : MonoBehaviour
             }
         }
 
-        // float horizontalInput = Input.GetAxisRaw("Horizontal");
-        // Vector3 moveX = new Vector3(horizontalInput, 0f, 0f);
-        // transform.position += moveX * moveSpeed * Time.deltaTime;
-        
-        // float verticalInput = Input.GetAxisRaw("Vertical");
-        // Vector3 moveY = new Vector3(0f, verticalInput, 0f);
-        // transform.position += moveY * moveSpeed * Time.deltaTime;
-
-        // vector.x = Input.GetAxisRaw("Horizontal");
-        // vector.y = Input.GetAxisRaw("Vertical");
-
-        // playerRigidbody.velocity = vector.normalized * moveSpeed;
-
         float deltaX = Input.GetAxis("Horizontal");
         float deltaY = Input.GetAxis("Vertical");
 
         Vector3 velocity = Vector3.zero;
         velocity.x            = deltaX;
         velocity.y            = deltaY;
-        playerRigidbody.velocity = velocity * moveSpeed;
+        _playerRigidbody.velocity = velocity * moveSpeed;
 
         if (velocity.x != 0.0f)
         {
@@ -162,8 +116,8 @@ public class Player : MonoBehaviour
             playerCurrentHp -= damage;
             PlayerManager.instance.stylishPoint -= 1f;
             _isHit = true;
-            plyaerCollider.enabled = false;
-            playerSpriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+            _playerCollider.enabled = false;
+            _playerSpriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
         } else if (other.gameObject.tag == "Golem") {
             Enemy hitEnemy = other.gameObject.GetComponent<Enemy>();
             float damage = hitEnemy.enemyATK - playerDEF;
@@ -173,8 +127,8 @@ public class Player : MonoBehaviour
             playerCurrentHp -= damage;
             PlayerManager.instance.stylishPoint -= 1f;
             _isHit = true;
-            plyaerCollider.enabled = false;
-            playerSpriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+            _playerCollider.enabled = false;
+            _playerSpriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
         } else if (other.gameObject.tag == "Eldlich") {
             Enemy hitEnemy = other.gameObject.GetComponent<Enemy>();
             float damage = hitEnemy.enemyATK - playerDEF;
@@ -184,8 +138,8 @@ public class Player : MonoBehaviour
             playerCurrentHp -= damage;
             PlayerManager.instance.stylishPoint -= 2f;
             _isHit = true;
-            plyaerCollider.enabled = false;
-            playerSpriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+            _playerCollider.enabled = false;
+            _playerSpriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
         }
     }
 }
