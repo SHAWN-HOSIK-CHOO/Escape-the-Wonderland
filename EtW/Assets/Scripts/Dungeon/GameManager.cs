@@ -7,33 +7,94 @@ using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager         _instance = null;
-    public static MapManager          SMapManager;
-    public static GameObject          SPlayer;
+    private static GameManager _instance;
+    public static  MapManager  SMapManager;
+    public static  GameObject  SPlayer;
+
+    //첫 세이브인가
+    public bool isFirstTimePlaying;
+    
+    //게임 클리어 통행증
+    [Header("1st Pass to Clear Game")]
+    public int firstClearPass;
+    [Header("2nd Pass to Clear Game")]
+    public int secondClearPass;
+    [Header("3rd Pass to Clear Game")]
+    public int thirdClearPass;
+    [Header("4th Pass to Clear Game")] 
+    public int fourthClearPass;
+    
+    //통행증이 모두 모였는가
+    public bool isAllPassClear;
     
     [SerializeField] public GameObject player;
     [SerializeField] public GameObject GOMapManager;
+
+    public static GameManager Instance => _instance == null ? null : _instance;
+
+    public bool IsPlayerDead
+    {
+        get;
+        set;
+    }
+    
+    public bool IsBossCleared
+    {
+        get;
+        set;
+    }
     
     void Awake() {
         if (_instance == null) {
             _instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
         }
         SPlayer              = player;
         SMapManager          = GOMapManager.GetComponent<MapManager>();
         
         SMapManager.Init();
+        isAllPassClear = false;
+        
+        //TODO: 바로 아래 코드는 디버깅을 위해 플레이어의 위치를 임의로 정함
         SMapManager.playerLocation = ePlayerLocation.Base;
+        //
+
+        if (PlayerPrefs.HasKey("CanSkipIntroduction"))
+        {
+            isFirstTimePlaying = false;
+        }
+        else
+        {
+            PlayerPrefs.SetInt("CanSkipIntroduction", 1);
+        }
+
+        IsPlayerDead  = false;
+        IsBossCleared = false;
+        
+        Load();
     }
 
     void Start()
     {
-        //TODO: Get Previous Location () 같은 함수로 저장된 상태를 불러오도록 해야함
+        if (isFirstTimePlaying)
+        {
+            //TODO: 애니메이션 재생 및 튜토리얼 진행
+        }
+        
+        CheckGameStatus();
+        
+        //TODO: ePlayerLocation.Base로 세팅해야 함. 현재는 던전 디버그를 위해 1번 던전에 세팅한 상태임
         SMapManager.GenerateMapAndPlaceCharacter(ePlayerLocation.Dungeon0);
     }
 
     private void Update()
     {
-        //Debug Codes
+        //TODO: ERASE
+        //Debug Codes-------------------------------------------
         if (Input.GetKeyDown(KeyCode.Z))
         {
             SMapManager.IsCurrentFloorCleared = true;
@@ -56,20 +117,69 @@ public class GameManager : MonoBehaviour
         {
             SMapManager.GenerateMapAndPlaceCharacter(ePlayerLocation.Boss2);
         }
-        // Debug Codes end
+        // Debug Codes end----------------------------------------
+        //TODO: ERASE
 
+        if (isAllPassClear)
+        {
+            DisplayEnding();
+            return;
+        }
+        
+        CheckPlayerStatus();
+        CheckGameStatus();
+        CheckMapEvents();
+    }
+
+    private void DisplayEnding()
+    {
+        //TODO: 탈출하는 애니메이션 등 재생 
+    }
+    
+    private void CheckPlayerStatus()
+    {
+        //TODO: 만약 플레이어가 죽었다면 외부에서 GameManager.IsPlayerDead을 true로 만들어 줄 것임
+        //TODO: 예를 들어 Player Script에서 Hp가 0이 되면 GameManager.IsPlayerDead = true;로 설정
+
+        if (IsPlayerDead)
+        {
+            WhatToDoWhenPlayerDead();
+        }
+    }
+
+    private void CheckGameStatus()
+    {
+        if (fourthClearPass == 1 && thirdClearPass == 1 && secondClearPass == 1 && firstClearPass == 1)
+        {
+            isAllPassClear = true;
+        }
+
+        if (   SMapManager.playerLocation == ePlayerLocation.Dungeon0 
+            || SMapManager.playerLocation == ePlayerLocation.Dungeon1
+            || SMapManager.playerLocation == ePlayerLocation.Dungeon2
+            || SMapManager.playerLocation == ePlayerLocation.Dungeon3)
+        {
+            if(DungeonQuestManager.Instance.IsCurrentQuestCleared())
+                SMapManager.IsCurrentFloorCleared = true;
+        }
+    }
+
+    private void CheckMapEvents()
+    {
         if (SMapManager.playerLocation == ePlayerLocation.Dungeon0 
             || SMapManager.playerLocation == ePlayerLocation.Dungeon1
             || SMapManager.playerLocation == ePlayerLocation.Dungeon2
             ||SMapManager.playerLocation == ePlayerLocation.Dungeon3  )
         {
+            //SMapManager.GenerateMapAndPlaceCharacter(...)함수에서 SMapManager.IsCurrentFloorCleared를 다시 false로 돌려놓음
             if (SMapManager.IsCurrentFloorCleared)
             {
+                SMapManager.roomDungeonGen.placeablePositions.Clear();
+                SMapManager.roomDungeonGen.roamablePositions.Clear();
+                SMapManager.roomDungeonGen.allWallPositions.Clear();
+                
                 if (SMapManager.CurrentDungeonFloorCount == 6)
                 {
-                    SMapManager.roomDungeonGen.placeablePositions.Clear();
-                    SMapManager.roomDungeonGen.roamablePositions.Clear();
-                    SMapManager.roomDungeonGen.allWallPositions.Clear();
                     SMapManager.CurrentDungeonFloorCount = 0;
                     switch (SMapManager.playerLocation)
                     {
@@ -92,12 +202,109 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 { 
-                    SMapManager.roomDungeonGen.placeablePositions.Clear();
-                    SMapManager.roomDungeonGen.roamablePositions.Clear();
-                    SMapManager.roomDungeonGen.allWallPositions.Clear();
                     SMapManager.GenerateMapAndPlaceCharacter(SMapManager.playerLocation);
                 }
             }
         }
+        else if (SMapManager.playerLocation == ePlayerLocation.Boss1 
+                 || SMapManager.playerLocation == ePlayerLocation.Boss2
+                 || SMapManager.playerLocation == ePlayerLocation.Boss3
+                 || SMapManager.playerLocation == ePlayerLocation.Boss4)
+        {
+            //TODO: Boss Script에서 BOSS의 hp가 0이 되면 GameManager.IsBossCleared = true로 설정해야 함
+            
+            if (IsBossCleared)
+            {
+                switch (SMapManager.playerLocation)
+                {
+                    case ePlayerLocation.Boss1:
+                        firstClearPass = 1;
+                        break;
+                    case ePlayerLocation.Boss2:
+                        secondClearPass = 1;
+                        break;
+                    case ePlayerLocation.Boss3:
+                        thirdClearPass = 1;
+                        break;
+                    case ePlayerLocation.Boss4:
+                        fourthClearPass = 1;
+                        break;
+                    default:
+                        Debug.Log("Invalid Boss room index : called from gamemanager checkmapevents()");
+                        break;
+                }
+            }   
+        }
+        else if (SMapManager.playerLocation == ePlayerLocation.Base)
+        {
+            
+        }
+    }
+
+    private void OnDisable()
+    {
+        Save();
+    }
+
+    private void OnDestroy()
+    {
+        Save();
+    }
+
+    private void Save()
+    {
+        PlayerPrefs.SetInt("FirstClearPass", firstClearPass);
+        PlayerPrefs.SetInt("SecondClearPass", secondClearPass);
+        PlayerPrefs.SetInt("ThirdClearPass", thirdClearPass);
+        PlayerPrefs.SetInt("FourthClearPass", fourthClearPass);
+    }
+
+    private void Load()
+    {
+        if (PlayerPrefs.HasKey("FirstClearPass"))
+        {
+            firstClearPass = PlayerPrefs.GetInt("FirstClearPass");
+        }
+        else
+        {
+            firstClearPass = 0;
+            PlayerPrefs.SetInt("FirstClearPass", firstClearPass);
+        }
+
+        if (PlayerPrefs.HasKey("SecondClearPass"))
+        {
+            secondClearPass = PlayerPrefs.GetInt("SecondClearPass");
+        }
+        else
+        {
+            secondClearPass = 0;
+            PlayerPrefs.SetInt("SecondClearPass", secondClearPass);
+        }
+
+        if (PlayerPrefs.HasKey("ThirdClearPass"))
+        {
+            thirdClearPass = PlayerPrefs.GetInt("ThirdClearPass");
+        }
+        else
+        {
+            thirdClearPass = 0;
+            PlayerPrefs.SetInt("ThirdClearPass", thirdClearPass);
+        }
+
+        if (PlayerPrefs.HasKey("FourthClearPass"))
+        {
+            fourthClearPass = PlayerPrefs.GetInt("FourthClearPass");
+        }
+        else
+        {
+            fourthClearPass = 0;
+            PlayerPrefs.SetInt("FourthClearPass", fourthClearPass);
+        }
+    }
+
+    private void WhatToDoWhenPlayerDead()
+    {
+        SMapManager.playerLocation = ePlayerLocation.Base;
+        //TODO: 격려의 메세지 재생
     }
 }

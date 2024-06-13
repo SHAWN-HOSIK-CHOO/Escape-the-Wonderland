@@ -137,9 +137,10 @@ MonoBehaviour:
   Hp: 20
   moveSpeed: 2
   rotateSpeed: 10
-  fiedlOfVision: 15
+  fieldOfVision: 15
   enemyATK: 3
   isHit: 0
+  monsterType: 1
 --- !u!50 &6899111492180452366
 Rigidbody2D:
   serializedVersion: 4

@@ -2,18 +2,28 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Enemy : MonoBehaviour
 {
+    public enum eEnemyType
+    {
+        just,
+        gatekeeper,
+        boss
+    }
+    
     private SpriteRenderer enemySpriteRenderer;
-    private Transform target;
-    public float Hp = 10f;
-    public float moveSpeed = 5f;
-    public float rotateSpeed = 10f;
-    public float fiedlOfVision = 5f;
-    public float enemyATK = 1.5f;
-    public bool isHit = false;
-    private float _timer = 0f;
+    private Transform      target;
+    public  float          Hp            = 10f;
+    public  float          moveSpeed     = 5f;
+    public  float          rotateSpeed   = 10f;
+    public  float          fieldOfVision = 11f;
+    public  float          enemyATK      = 1.5f;
+    public  bool           isHit         = false;
+    private float          _timer        = 0f;
+
+    public eEnemyType monsterType;
     
 
     private void Awake() {
@@ -28,9 +38,11 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        //Debug.Log("Update Called");
         float distance = Vector3.Distance(transform.position, target.position);
 
-        if (distance <= fiedlOfVision) {
+        //Debug.Log("distance : "+distance + " fov : " + fieldOfVision);
+        if (distance <= fieldOfVision) {
             MoveToTarget();
         }
         if (isHit) {
@@ -45,6 +57,7 @@ public class Enemy : MonoBehaviour
     }
 
     private void MoveToTarget() {
+        Debug.Log("move to target called");
         Vector2 direction = new Vector2(transform.position.x - target.position.x, transform.position.y - target.position.y);
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         Quaternion angleAxis = Quaternion.AngleAxis(angle - 90f, Vector3.forward);
@@ -70,6 +83,12 @@ public class Enemy : MonoBehaviour
                 PlayerManager.instance.stylishPoint += 0.5f;
                 PlayerManager.instance.LVP++;
                 PlayerManager.instance.tempLVP++;
+
+                if (monsterType == eEnemyType.gatekeeper)
+                {
+                    DungeonQuestManager.Instance.isGateKeeperDead = true;
+                }
+                
                 Destroy(gameObject);
             }
         }

@@ -14,20 +14,64 @@ public class MonsterPcg : MonoBehaviour
    [SerializeField] public GameObject       monsterHolder;
    
    public Dictionary<Vector2Int, HashSet<Vector2Int>> roomAndFloorsToPlaceMonsters;
-   
+
+   public                  int        ChildCount => monsterHolder.transform.childCount;
+   [SerializeField] public GameObject gateKeeperMonster;
+   [SerializeField] public GameObject toNextFloorPortal;
+
    public void ProceduralGenMonsters()
    {
       roomAndFloorsToPlaceMonsters = roomDungeonGen.placeablePositions;
       PlaceMonsters();
+
+      DungeonQuestManager.Instance.TargetCount = ChildCount / 2;
    }
 
    private void PlaceMonsters()
    {
+      bool shouldPlaceGateKeeper = false;
+      bool shouldPlacePortal     = false;
+      
+      if (DungeonQuestManager.Instance.CurrentQuestType == DungeonQuestManager.eQuestType.Hunt)
+      {
+         shouldPlaceGateKeeper = true;
+      }
+      else if (DungeonQuestManager.Instance.CurrentQuestType == DungeonQuestManager.eQuestType.Find)
+      {
+         shouldPlacePortal = true;
+      }
+
+      int randomIndex = Random.Range(0, roomAndFloorsToPlaceMonsters.Keys.Count);
+      int cnt         = -1;
+      
       foreach (var room in roomAndFloorsToPlaceMonsters)
       {
+         cnt++;
+         
          List<Vector2Int> positionList     = room.Value.ToList();
          List<GameObject> selectedMonsters = SelectMonsters(Random.Range(minMonsterPerRoom, maxMonsterPerRoom));
 
+         if (shouldPlaceGateKeeper)
+         {
+            if (cnt == randomIndex)
+            {
+               Debug.Log("Added GateKeeper");
+               selectedMonsters.Add(gateKeeperMonster);
+               DungeonQuestManager.Instance.isGateKeeperDead = false;
+               shouldPlaceGateKeeper                         = false;
+            }
+         }
+
+         if (shouldPlacePortal)
+         {
+            if (cnt == randomIndex)
+            {
+               Debug.Log("Added Portal");
+               selectedMonsters.Add(toNextFloorPortal);
+               shouldPlacePortal = false;
+            }
+         }
+         
          foreach (var monster in selectedMonsters)
          {
             //Debug.Log(positionList.Count);
@@ -55,7 +99,7 @@ public class MonsterPcg : MonoBehaviour
          }
       }
    }
-
+   
    private List<GameObject> SelectMonsters(int monsterCount)
    {
       List<GameObject> retSelectedMonsters = new List<GameObject>();

@@ -41,12 +41,10 @@ public class MapManager : MonoBehaviour
         set;
     }
     
-    private MapManager(){}
-    
     public void Init()
     {
-        roomDungeonGen          = bspMapGenerator.GetComponent<RoomDungeonGen>();
-        monsterPcg              = monsterGenerator.GetComponent<MonsterPcg>();
+        roomDungeonGen           = bspMapGenerator.GetComponent<RoomDungeonGen>();
+        monsterPcg               = monsterGenerator.GetComponent<MonsterPcg>();
         player                   = GameManager.SPlayer;
         CurrentDungeonFloorCount = 0;
         IsCurrentFloorCleared    = false;
@@ -91,6 +89,8 @@ public class MapManager : MonoBehaviour
 
     private void GenerateDungeon(ePlayerLocation dungeonNumber)
     {
+        DungeonQuestManager.Instance.GenerateQuest();
+        
         baseMapHolder.SetActive(false);
         bossMapHolder.SetActive(false);
         dungeonMapHolder.SetActive(true);

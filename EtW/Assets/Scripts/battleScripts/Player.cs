@@ -63,7 +63,8 @@ public class Player : MonoBehaviour
 
         if (playerCurrentHp <= 0) {
             PlayerManager.instance.gameOver = true;
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            this.gameObject.SetActive(false);
         }
 
         if (playerCurrentMp > playerMaxMp) {
