@@ -57,7 +57,6 @@ public class Enemy : MonoBehaviour
     }
 
     private void MoveToTarget() {
-        Debug.Log("move to target called");
         Vector2 direction = new Vector2(transform.position.x - target.position.x, transform.position.y - target.position.y);
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         Quaternion angleAxis = Quaternion.AngleAxis(angle - 90f, Vector3.forward);
@@ -88,6 +87,8 @@ public class Enemy : MonoBehaviour
                 {
                     DungeonQuestManager.Instance.isGateKeeperDead = true;
                 }
+                
+                Debug.Log("Remaining enemy cnt : " + (GameManager.SMapManager.monsterPcg.ChildCount - 1));
                 
                 Destroy(gameObject);
             }

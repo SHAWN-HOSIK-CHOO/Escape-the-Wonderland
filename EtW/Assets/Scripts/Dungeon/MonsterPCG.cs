@@ -1,3 +1,6 @@
+/*
+ * Author : Hosik Choo
+ */
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,7 +27,11 @@ public class MonsterPcg : MonoBehaviour
       roomAndFloorsToPlaceMonsters = roomDungeonGen.placeablePositions;
       PlaceMonsters();
 
-      DungeonQuestManager.Instance.TargetCount = ChildCount / 2;
+      if (DungeonQuestManager.Instance.CurrentQuestType == DungeonQuestManager.eQuestType.Eliminate)
+      {
+         DungeonQuestManager.Instance.TargetCount = ChildCount / 2;
+         Debug.Log("Target Count : " + DungeonQuestManager.Instance.TargetCount);
+      }
    }
 
    private void PlaceMonsters()
@@ -68,7 +75,8 @@ public class MonsterPcg : MonoBehaviour
             {
                Debug.Log("Added Portal");
                selectedMonsters.Add(toNextFloorPortal);
-               shouldPlacePortal = false;
+               DungeonQuestManager.Instance.foundPortal = false;
+               shouldPlacePortal                        = false;
             }
          }
          

@@ -1,3 +1,6 @@
+/*
+ *Author : Hosik Choo
+ */
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,6 +15,7 @@ public class DungeonQuestManager : MonoBehaviour
 
    [Header("For Eliminate Quest")] public int  TargetCount;
    [Header("For Hunt Quest")]      public bool isGateKeeperDead;
+   [Header("For Find Quest")]      public bool foundPortal;
    
    public eQuestType CurrentQuestType
    {
@@ -75,6 +79,7 @@ public class DungeonQuestManager : MonoBehaviour
             _isCurrentQuestCleared = isGateKeeperDead;
             break;
          case eQuestType.Find:
+            _isCurrentQuestCleared = foundPortal;
             break;
          case eQuestType.Eliminate:
             _isCurrentQuestCleared = GameManager.SMapManager.monsterPcg.ChildCount <= TargetCount;

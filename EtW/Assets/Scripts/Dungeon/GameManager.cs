@@ -1,3 +1,6 @@
+/*
+ * Author : Hosik Choo
+ */
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,6 +13,7 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
     public static  MapManager  SMapManager;
     public static  GameObject  SPlayer;
+    public         GameObject  dungeonSelectText;
 
     //첫 세이브인가
     public bool isFirstTimePlaying;
@@ -59,9 +63,7 @@ public class GameManager : MonoBehaviour
         SMapManager.Init();
         isAllPassClear = false;
         
-        //TODO: 바로 아래 코드는 디버깅을 위해 플레이어의 위치를 임의로 정함
         SMapManager.playerLocation = ePlayerLocation.Base;
-        //
 
         if (PlayerPrefs.HasKey("CanSkipIntroduction"))
         {
@@ -87,8 +89,7 @@ public class GameManager : MonoBehaviour
         
         CheckGameStatus();
         
-        //TODO: ePlayerLocation.Base로 세팅해야 함. 현재는 던전 디버그를 위해 1번 던전에 세팅한 상태임
-        SMapManager.GenerateMapAndPlaceCharacter(ePlayerLocation.Dungeon0);
+        SMapManager.GenerateMapAndPlaceCharacter(ePlayerLocation.Base);
     }
 
     private void Update()
