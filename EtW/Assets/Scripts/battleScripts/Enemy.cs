@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Enemy : MonoBehaviour
 {
@@ -12,60 +11,101 @@ public class Enemy : MonoBehaviour
         gatekeeper,
         boss
     }
-    
-    private SpriteRenderer enemySpriteRenderer;
-    private Transform      target;
-    public  float          Hp            = 10f;
-    public  float          moveSpeed     = 5f;
-    public  float          rotateSpeed   = 10f;
-    public  float          fieldOfVision = 11f;
-    public  float          enemyATK      = 1.5f;
-    public  bool           isHit         = false;
-    private float          _timer        = 0f;
 
-    public eEnemyType monsterType;
+    private SpriteRenderer enemySpriteRenderer;
+    private Transform target;
+    private Rigidbody2D _enemyRigidBody;
+    public float Hp = 10f;
+    public float moveSpeed = 5f;
+    public float rotateSpeed = 10f;
+    public float fiedlOfVision = 5f;
+    public float enemyATK = 1.5f;
+    public bool isHit = false;
+    private float _timer = 0f;
+    private float _xDistance = 0;
+    private float _yDistance = 0;
+    private Vector3 dir;
+    public Animator animator;
     
+    public eEnemyType monsterType;
 
     private void Awake() {
         enemySpriteRenderer = GetComponent<SpriteRenderer>();
+        _enemyRigidBody = GetComponent<Rigidbody2D>();
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
     void Start()
     {
+
     }
 
 
     void Update()
     {
-        //Debug.Log("Update Called");
-        float distance = Vector3.Distance(transform.position, target.position);
+        Debug.Log("update");
+        if (!PlayerManager.instance.gameOver) {
+            target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+            float distance = Vector3.Distance(transform.position, target.position);
 
-        //Debug.Log("distance : "+distance + " fov : " + fieldOfVision);
-        if (distance <= fieldOfVision) {
-            MoveToTarget();
-        }
-        if (isHit) {
-            if (_timer >= 0.3f) {
-                enemySpriteRenderer.color = new Color(1, 1, 1, 1);
-                _timer = 0f;
-                isHit = false;
-            } else {
-                _timer += Time.deltaTime;
+            if (distance <= fiedlOfVision) {
+                MoveToTarget();
+            }
+            if (isHit) {
+                if (_timer >= 0.3f) {
+                    enemySpriteRenderer.color = new Color(1, 1, 1, 1);
+                    _timer = 0f;
+                    isHit = false;
+                } else {
+                    _timer += Time.deltaTime;
+                }
             }
         }
     }
 
     private void MoveToTarget() {
-        Vector2 direction = new Vector2(transform.position.x - target.position.x, transform.position.y - target.position.y);
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Quaternion angleAxis = Quaternion.AngleAxis(angle - 90f, Vector3.forward);
-        Quaternion rotation = Quaternion.Slerp(transform.rotation, angleAxis, PlayerManager.instance.enemySpeed * rotateSpeed * Time.deltaTime);
+        // Vector2 direction = new Vector2(transform.position.x - target.position.x, transform.position.y - target.position.y);
+        _xDistance = transform.position.x - target.position.x;
+        _yDistance = transform.position.y - target.position.y;
+        
 
-        transform.rotation = rotation;
+        if (Mathf.Abs(_xDistance) > Mathf.Abs(_yDistance)) {
+            if (_xDistance > 0) {
+                dir = new Vector3(1, 0, 0);
+                animator.SetTrigger("left");
+            } else if (_xDistance < 0) {
+                dir = new Vector3(-1, 0, 0);
+                animator.SetTrigger("right");
+            }
+        } else if (Mathf.Abs(_xDistance) < Mathf.Abs(_yDistance)) {
+            if (_yDistance > 0) {
+                dir = new Vector3(0, 1, 0);
+                animator.SetTrigger("down");
+            } else if (_xDistance < 0) {
+                dir = new Vector3(0, -1, 0);
+                animator.SetTrigger("up");
+            }
+        } else if (Mathf.Abs(_xDistance) > Mathf.Abs(_yDistance)) {
+            if (_xDistance > 0) {
+                dir = new Vector3(1, 0, 0);
+                animator.SetTrigger("left");
+            } else if (_xDistance < 0) {
+                dir = new Vector3(-1, 0, 0);
+                animator.SetTrigger("right");
+            }
+        }
 
-        Vector3 dir = direction;
-        transform.position += (-dir.normalized * moveSpeed * Time.deltaTime * PlayerManager.instance.enemySpeed);
+
+        // float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        // Quaternion angleAxis = Quaternion.AngleAxis(angle - 90f, Vector3.forward);
+        // Quaternion rotation = Quaternion.Slerp(transform.rotation, angleAxis, PlayerManager.instance.enemySpeed * rotateSpeed * Time.deltaTime);
+
+        // transform.rotation = rotation;
+
+
+
+        // transform.position += (-dir * moveSpeed * Time.deltaTime * PlayerManager.instance.enemySpeed);
+        _enemyRigidBody.velocity = -dir * moveSpeed * PlayerManager.instance.enemySpeed;
     }
 
 
@@ -89,7 +129,7 @@ public class Enemy : MonoBehaviour
                 }
                 
                 Debug.Log("Remaining enemy cnt : " + (GameManager.SMapManager.monsterPcg.ChildCount - 1));
-                
+
                 Destroy(gameObject);
             }
         }
