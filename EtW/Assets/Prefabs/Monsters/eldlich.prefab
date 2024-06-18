@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 6751809435636160856}
   - component: {fileID: -2806726030534616836}
   - component: {fileID: 6899111492180452366}
-  m_Layer: 10
+  - component: {fileID: -6393547438809515776}
+  m_Layer: 11
   m_Name: eldlich
   m_TagString: Eldlich
   m_Icon: {fileID: 0}
@@ -119,9 +120,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.0032534509, y: 0.0325346}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.5227741
 --- !u!114 &-2806726030534616836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,12 +135,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 934a3659010fe2c4ba55d785bfe33f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hp: 7
-  moveSpeed: 3
+  Hp: 2
+  moveSpeed: 2
   rotateSpeed: 10
   fiedlOfVision: 15
-  enemyATK: 4
+  enemyATK: 5
   isHit: 0
+  animator: {fileID: -6393547438809515776}
+  monsterType: 0
 --- !u!50 &6899111492180452366
 Rigidbody2D:
   serializedVersion: 4
@@ -166,4 +169,25 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
+--- !u!95 &-6393547438809515776
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8421654813026323168}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: caf0e49ae2d55c64d851fa8af4aacd57, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

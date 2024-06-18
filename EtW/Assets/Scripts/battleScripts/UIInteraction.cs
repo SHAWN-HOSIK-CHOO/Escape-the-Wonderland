@@ -22,6 +22,10 @@ public class UIInteraction : MonoBehaviour
     public Button util1;
     public Button util2;
     public Button util3;
+    public Sprite[] skillImages = new Sprite[9];
+    public Image[] skillUI = new Image[3];
+    public Image[] skillUIAlpha = new Image[3];
+    public Player player;
     
     public void Play() {
         Time.timeScale = 1f;
@@ -30,6 +34,7 @@ public class UIInteraction : MonoBehaviour
     public void ATKPlus() {
         if (PlayerManager.instance.LVP >= 1) {
             PlayerManager.instance.playerStatATK++;
+            PlayerManager.instance.appliedATK += 0.1f;
             PlayerManager.instance.LVP--;
         } else {
             notiText.SetText("Not enough LVP");
@@ -38,8 +43,21 @@ public class UIInteraction : MonoBehaviour
 
     public void DEFPlus() {
         if (PlayerManager.instance.LVP >= 1) {
-            PlayerManager.instance.playerStatDEF += 0.1f;
+            PlayerManager.instance.playerStatDEF++;
+            PlayerManager.instance.appliedDEF += 0.05f;
             PlayerManager.instance.LVP--;
+            player.playerDEF += 0.05f;
+        } else {
+            notiText.SetText("Not enough LVP");
+        }
+    }
+
+    public void AGIPlus() {
+        if (PlayerManager.instance.LVP >= 1) {
+            PlayerManager.instance.playerStatAGI++;
+            PlayerManager.instance.appliedAGI += 0.1f;
+            PlayerManager.instance.LVP--;
+            player.playerAGI += 0.1f;
         } else {
             notiText.SetText("Not enough LVP");
         }
@@ -48,6 +66,7 @@ public class UIInteraction : MonoBehaviour
     public void HPPlus() {
         if (PlayerManager.instance.LVP >= 1) {
             PlayerManager.instance.playerStatHP++;
+            PlayerManager.instance.appliedHP += 2f;
             PlayerManager.instance.LVP--;
         } else {
             notiText.SetText("Not enough LVP");
@@ -56,7 +75,8 @@ public class UIInteraction : MonoBehaviour
 
     public void MPPlus() {
         if (PlayerManager.instance.LVP >= 1) {
-            PlayerManager.instance.playerStatMP += 10f;
+            PlayerManager.instance.playerStatMP++;
+            PlayerManager.instance.appliedMP += 10f;
             PlayerManager.instance.LVP--;
         } else {
             notiText.SetText("Not enough LVP");
@@ -67,6 +87,9 @@ public class UIInteraction : MonoBehaviour
         if (PlayerManager.instance.SP >= 1) {
             PlayerManager.instance.skill_select[0] = "attack1";
             PlayerManager.instance.SP--;
+            skillUIAlpha[0].gameObject.SetActive(true);
+            skillUI[0].sprite = skillImages[0];
+            skillUIAlpha[0].sprite = skillImages[0];
             skillManager.firstSkillActivated = true;
             attack1.interactable = false;
             defense1.interactable = false;
@@ -83,6 +106,9 @@ public class UIInteraction : MonoBehaviour
         if (PlayerManager.instance.SP >= 1) {
             PlayerManager.instance.skill_select[1] = "attack2";
             PlayerManager.instance.SP--;
+            skillUIAlpha[1].gameObject.SetActive(true);
+            skillUI[1].sprite = skillImages[1];
+            skillUIAlpha[1].sprite = skillImages[1];
             skillManager.secondSkillActivated = true;
             attack2.interactable = false;
             defense2.interactable = false;
@@ -100,6 +126,9 @@ public class UIInteraction : MonoBehaviour
         if (PlayerManager.instance.SP >= 1) {
             PlayerManager.instance.skill_select[2] = "attack3";
             PlayerManager.instance.SP--;
+            skillUIAlpha[2].gameObject.SetActive(true);
+            skillUI[2].sprite = skillImages[2];
+            skillUIAlpha[2].sprite = skillImages[2];
             skillManager.thirdSkillActivated = true;
             attack3.interactable = false;
             defense3.interactable = false;
@@ -113,6 +142,9 @@ public class UIInteraction : MonoBehaviour
         if (PlayerManager.instance.SP >= 1) {
             PlayerManager.instance.skill_select[0] = "defense1";
             PlayerManager.instance.SP--;
+            skillUIAlpha[0].gameObject.SetActive(true);
+            skillUI[0].sprite = skillImages[3];
+            skillUIAlpha[0].sprite = skillImages[3];
             skillManager.firstSkillActivated = true;
             attack1.interactable = false;
             defense1.interactable = false;
@@ -129,6 +161,9 @@ public class UIInteraction : MonoBehaviour
         if (PlayerManager.instance.SP >= 1) {
             PlayerManager.instance.skill_select[1] = "defense2";
             PlayerManager.instance.SP--;
+            skillUIAlpha[1].gameObject.SetActive(true);
+            skillUI[1].sprite = skillImages[4];
+            skillUIAlpha[1].sprite = skillImages[4];
             skillManager.secondSkillActivated = true;
             attack2.interactable = false;
             defense2.interactable = false;
@@ -145,6 +180,9 @@ public class UIInteraction : MonoBehaviour
         if (PlayerManager.instance.SP >= 1) {
             PlayerManager.instance.skill_select[2] = "defense3";
             PlayerManager.instance.SP--;
+            skillUIAlpha[2].gameObject.SetActive(true);
+            skillUI[2].sprite = skillImages[5];
+            skillUIAlpha[2].sprite = skillImages[5];
             skillManager.thirdSkillActivated = true;
             attack3.interactable = false;
             defense3.interactable = false;
@@ -158,6 +196,9 @@ public class UIInteraction : MonoBehaviour
         if (PlayerManager.instance.SP >= 1) {
             PlayerManager.instance.skill_select[0] = "util1";
             PlayerManager.instance.SP--;
+            skillUIAlpha[0].gameObject.SetActive(true);
+            skillUI[0].sprite = skillImages[6];
+            skillUIAlpha[0].sprite = skillImages[6];
             skillManager.firstSkillActivated = true;
             attack1.interactable = false;
             defense1.interactable = false;
@@ -174,6 +215,9 @@ public class UIInteraction : MonoBehaviour
         if (PlayerManager.instance.SP >= 1) {
             PlayerManager.instance.skill_select[1] = "util2";
             PlayerManager.instance.SP--;
+            skillUIAlpha[1].gameObject.SetActive(true);
+            skillUI[1].sprite = skillImages[7];
+            skillUIAlpha[1].sprite = skillImages[7];
             skillManager.secondSkillActivated = true;
             attack2.interactable = false;
             defense2.interactable = false;
@@ -190,6 +234,9 @@ public class UIInteraction : MonoBehaviour
         if (PlayerManager.instance.SP >= 1) {
             PlayerManager.instance.skill_select[2] = "util3";
             PlayerManager.instance.SP--;
+            skillUIAlpha[2].gameObject.SetActive(true);
+            skillUI[2].sprite = skillImages[8];
+            skillUIAlpha[2].sprite = skillImages[8];
             skillManager.thirdSkillActivated = true;
             attack3.interactable = false;
             defense3.interactable = false;

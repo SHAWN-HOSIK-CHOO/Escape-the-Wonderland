@@ -13,16 +13,17 @@ public class Player : MonoBehaviour
     private Skill _skill;
 
     public bool isLeft = false;
-    public float moveSpeed = 10f;
     public float playerMaxHp;
     public float playerCurrentHp;
     public float playerMaxMp;
     public float playerCurrentMp;
     public float playerATK = 1f;
     public float playerDEF = 1f;
+    public float playerAGI = 1f;
     public float reductionRate = 1f;
     private float _godModeTimer = 1f;
     private bool _isHit = false;
+    private bool _start = true;
 
     private void Awake() {
         _playerSpriteRenderer = GetComponent<SpriteRenderer>();
@@ -38,28 +39,52 @@ public class Player : MonoBehaviour
         _playerCollider = GetComponent<BoxCollider2D>();
         _skill = GetComponent<Skill>();
 
-        playerMaxHp = PlayerManager.instance.playerStatHP;
-        playerCurrentHp = playerMaxHp;
-        playerMaxMp = PlayerManager.instance.playerStatMP;
-        playerCurrentMp = playerMaxMp;
-        playerATK = PlayerManager.instance.playerStatATK;
-        playerDEF = PlayerManager.instance.playerStatDEF * reductionRate;
         StartCoroutine("MPRegeneration");
+        StartCoroutine("HPRegeneration");
     }
 
     IEnumerator MPRegeneration() {
         while (true) {
-            playerCurrentMp += 1f;
-            yield return new WaitForSecondsRealtime(3f);
+            playerCurrentMp += 2.5f;
+            yield return new WaitForSecondsRealtime(1f);
+        }
+    }
+
+    IEnumerator HPRegeneration() {
+        while (true) {
+            playerCurrentHp += 0.3f;
+            yield return new WaitForSecondsRealtime(1f);
         }
     }
 
 
-
     void Update()
     {
-        playerMaxHp = PlayerManager.instance.playerStatHP;
-        playerMaxMp = PlayerManager.instance.playerStatMP;
+        if (_start) {
+            playerATK = PlayerManager.instance.appliedATK;
+            playerDEF = PlayerManager.instance.appliedDEF * reductionRate;
+            playerAGI = PlayerManager.instance.appliedAGI;
+            playerMaxHp = PlayerManager.instance.appliedHP;
+            playerMaxMp = PlayerManager.instance.appliedMP;
+            playerCurrentHp = playerMaxHp;
+            playerCurrentMp = playerMaxMp;
+            _start = false;
+        }
+
+        playerMaxHp = PlayerManager.instance.appliedHP;
+        playerMaxMp = PlayerManager.instance.appliedMP;
+
+        if (_skill.invincible) {
+            playerDEF = 99f;
+        } else {
+            if (_skill.endure) {
+                playerDEF = PlayerManager.instance.appliedDEF * reductionRate + 0.7f;
+            } else {
+                playerDEF = PlayerManager.instance.appliedDEF * reductionRate;
+            }
+        }
+
+
 
         if (playerCurrentHp <= 0) {
             PlayerManager.instance.gameOver   = true;
@@ -71,6 +96,11 @@ public class Player : MonoBehaviour
         if (playerCurrentMp > playerMaxMp) {
             playerCurrentMp = playerMaxMp;
         }
+
+        if (playerCurrentHp > playerMaxHp) {
+            playerCurrentHp = playerMaxHp;
+        }
+
         
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("move")) {
             if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1) {
@@ -95,7 +125,7 @@ public class Player : MonoBehaviour
         Vector3 velocity = Vector3.zero;
         velocity.x            = deltaX;
         velocity.y            = deltaY;
-        _playerRigidbody.velocity = velocity * moveSpeed;
+        _playerRigidbody.velocity = velocity * playerAGI;
 
         if (velocity.x != 0.0f)
         {
@@ -103,7 +133,7 @@ public class Player : MonoBehaviour
             this.transform.rotation = Quaternion.Euler(new Vector3(0.0f, ( flipped ? 180.0f : 0.0f ), 0.0f));
         }
 
-        animator.SetFloat("Speed",Mathf.Abs(velocity.magnitude * moveSpeed));
+        animator.SetFloat("Speed",Mathf.Abs(velocity.magnitude * playerAGI));
     }
 
 
@@ -116,7 +146,7 @@ public class Player : MonoBehaviour
                 damage = 0;
             }
             playerCurrentHp -= damage;
-            PlayerManager.instance.stylishPoint -= 1f;
+            PlayerManager.instance.stylishPoint -= 0.3f;
             _isHit = true;
             _playerCollider.enabled = false;
             _playerSpriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
@@ -127,7 +157,7 @@ public class Player : MonoBehaviour
                 damage = 0;
             }
             playerCurrentHp -= damage;
-            PlayerManager.instance.stylishPoint -= 1f;
+            PlayerManager.instance.stylishPoint -= 0.3f;
             _isHit = true;
             _playerCollider.enabled = false;
             _playerSpriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
@@ -138,7 +168,51 @@ public class Player : MonoBehaviour
                 damage = 0;
             }
             playerCurrentHp -= damage;
-            PlayerManager.instance.stylishPoint -= 2f;
+            PlayerManager.instance.stylishPoint -= 0.3f;
+            _isHit = true;
+            _playerCollider.enabled = false;
+            _playerSpriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+        } else if (other.gameObject.tag == "Elk") {
+            Enemy hitEnemy = other.gameObject.GetComponent<Enemy>();
+            float damage = hitEnemy.enemyATK - playerDEF;
+            if (damage < 0) {
+                damage = 0;
+            }
+            playerCurrentHp -= damage;
+            PlayerManager.instance.stylishPoint -= 0.3f;
+            _isHit = true;
+            _playerCollider.enabled = false;
+            _playerSpriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+        } else if (other.gameObject.tag == "Woodgolem") {
+            Enemy hitEnemy = other.gameObject.GetComponent<Enemy>();
+            float damage = hitEnemy.enemyATK - playerDEF;
+            if (damage < 0) {
+                damage = 0;
+            }
+            playerCurrentHp -= damage;
+            PlayerManager.instance.stylishPoint -= 0.3f;
+            _isHit = true;
+            _playerCollider.enabled = false;
+            _playerSpriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+        } else if (other.gameObject.tag == "Graywolf") {
+            Enemy hitEnemy = other.gameObject.GetComponent<Enemy>();
+            float damage = hitEnemy.enemyATK - playerDEF;
+            if (damage < 0) {
+                damage = 0;
+            }
+            playerCurrentHp -= damage;
+            PlayerManager.instance.stylishPoint -= 0.3f;
+            _isHit = true;
+            _playerCollider.enabled = false;
+            _playerSpriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+        } else if (other.gameObject.tag == "Darknight") {
+            Enemy hitEnemy = other.gameObject.GetComponent<Enemy>();
+            float damage = hitEnemy.enemyATK - playerDEF;
+            if (damage < 0) {
+                damage = 0;
+            }
+            playerCurrentHp -= damage;
+            PlayerManager.instance.stylishPoint -= 0.3f;
             _isHit = true;
             _playerCollider.enabled = false;
             _playerSpriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);

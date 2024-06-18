@@ -16,6 +16,8 @@ public class Skill : MonoBehaviour
     public bool firstSkillActivated = false;
     public bool secondSkillActivated = false;
     public bool thirdSkillActivated = false;
+    public bool endure = false;
+    public bool invincible = false;
     public struct PlayerSkill {
         public float coolTime;
         public float cost;
@@ -31,6 +33,7 @@ public class Skill : MonoBehaviour
             this.type = type;
         }
     }
+
     private Player player;
 
     [SerializeField]
@@ -47,7 +50,7 @@ public class Skill : MonoBehaviour
     PlayerSkill Askill3 = new PlayerSkill(0f, 150f, -1f, "judgement-cut", "passive");
     PlayerSkill Dskill1 = new PlayerSkill(10f, 30f, 5f, "endure", "active");
     PlayerSkill Dskill2 = new PlayerSkill(0f, 0f, -1f, "stone-skin", "passive");
-    PlayerSkill Dskill3 = new PlayerSkill(30f, 150f, 10f, "invinsible", "active");
+    PlayerSkill Dskill3 = new PlayerSkill(30f, 150f, 10f, "invincible", "active");
     PlayerSkill Uskill1 = new PlayerSkill(10f, 30f, 5f, "fast-move", "active");
     PlayerSkill Uskill2 = new PlayerSkill(30f, 60f, -1f, "heal", "active");
     PlayerSkill Uskill3 = new PlayerSkill(40f, 100f, 10f, "hyper-speed", "active");
@@ -266,11 +269,9 @@ public class Skill : MonoBehaviour
                 if (PlayerManager.instance.skill_select[2] == "attack3" & player.playerCurrentMp >= Askill3.cost) {
                     if (Askill3.type == "active") {
                         if (Input.GetKeyDown(KeyCode.E)) {
-                            player.playerCurrentMp -= Askill3.cost;
                             ActivateSkill(Askill3, 3);
                         }
                     } else if (Askill3.type == "passive") {
-                        player.playerCurrentMp -= Askill3.cost;
                         ActivateSkill(Askill3, 3);
                     }
                 } else if (PlayerManager.instance.skill_select[2] == "defense3" & player.playerCurrentMp >= Dskill3.cost) {
@@ -371,7 +372,7 @@ public class Skill : MonoBehaviour
                 }
             }
         } else if (skill.name == "incisive-attack") {
-            PlayerManager.instance.increaseRate = 1.1f;
+            PlayerManager.instance.increaseRate = 2.5f;
             if (skill.type == "active") {
                 if (order == 1) {
                     _firstReady = false;
@@ -393,7 +394,7 @@ public class Skill : MonoBehaviour
                 }
             }
         } else if (skill.name == "endure") {
-            player.playerDEF *= 1.3f;
+            endure = true;
             if (skill.type == "active") {
                 if (order == 1) {
                     _firstReady = false;
@@ -404,8 +405,7 @@ public class Skill : MonoBehaviour
                 }
             }
         } else if (skill.name == "stone-skin") {
-            player.reductionRate = 1.1f;
-            player.playerDEF = PlayerManager.instance.playerStatDEF * player.reductionRate;
+            player.reductionRate = 1.25f;
             if (skill.type == "active") {
                 if (order == 1) {
                     _firstReady = false;
@@ -416,7 +416,7 @@ public class Skill : MonoBehaviour
                 }
             }
         } else if (skill.name == "invincible") {
-            player.playerDEF = 99f;
+            invincible = true;
             if (skill.type == "active") {
                 if (order == 1) {
                     _firstReady = false;
@@ -427,7 +427,7 @@ public class Skill : MonoBehaviour
                 }
             }
         } else if (skill.name == "fast-move") {
-            player.moveSpeed *= 1.3f;
+            player.playerAGI *= 1.3f;
             if (skill.type == "active") {
                 if (order == 1) {
                     _firstReady = false;
@@ -468,17 +468,17 @@ public class Skill : MonoBehaviour
     public void DeactivateSkill(PlayerSkill skill, int order) {
         if (order == 1) {
             if (skill.name == "endure") {
-                player.playerDEF = PlayerManager.instance.playerStatDEF;
+                endure = false;
             } else if (skill.name == "fast-move") {
-                player.moveSpeed = 10f;
+                player.playerAGI = PlayerManager.instance.appliedAGI;
             }
             _firstCoolDown = true;
         }
 
             
         if (order == 3) {
-            if (skill.name == "invinsible") {
-                player.playerDEF = PlayerManager.instance.playerStatDEF;
+            if (skill.name == "invincible") {
+                invincible = false;
             } else if (skill.name == "hyper-speed") {
                 PlayerManager.instance.enemySpeed = 1f;
                 }
@@ -495,14 +495,5 @@ public class Skill : MonoBehaviour
                 _thirdCoolDown = true;
             }
         }
-
-
-        // if (_firstCoolDown) {
-        //     skill.coolTime -= Time.deltaTime;
-        // if (skill.coolTime <= 0) {
-        //     skill.coolTime = coolTimeArray[0];
-        //     _firstReady = true;
-        //     }
-        // }
     }
 }

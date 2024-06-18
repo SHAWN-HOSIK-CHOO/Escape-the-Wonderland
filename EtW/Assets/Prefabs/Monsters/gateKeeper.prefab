@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 6899111492180452366}
   - component: {fileID: -6393547438809515776}
   m_Layer: 11
-  m_Name: golemNew
-  m_TagString: Wolf
+  m_Name: gateKeeper
+  m_TagString: WoodGolem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 11750261
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: -334662267, guid: 7584898bc36780b449934599e93187d7, type: 3}
+  m_Sprite: {fileID: -405918498, guid: c2cf5b413657dce49aa64718c896e020, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -120,9 +120,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.0032534509, y: 0.0325346}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.5227741
 --- !u!114 &-2806726030534616836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,14 +135,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 934a3659010fe2c4ba55d785bfe33f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hp: 20
-  moveSpeed: 2
+  Hp: 12
+  moveSpeed: 3
   rotateSpeed: 10
   fiedlOfVision: 15
-  enemyATK: 2
+  enemyATK: 3
   isHit: 0
   animator: {fileID: -6393547438809515776}
-  monsterType: 0
+  monsterType: 1
 --- !u!50 &6899111492180452366
 Rigidbody2D:
   serializedVersion: 4
@@ -169,7 +169,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!95 &-6393547438809515776
 Animator:
   serializedVersion: 5
@@ -180,7 +180,7 @@ Animator:
   m_GameObject: {fileID: 8421654813026323168}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 413f5277572cd2f40b7c6c48179e6d8c, type: 2}
+  m_Controller: {fileID: 9100000, guid: 52d3045851a7f01489d6f098f8ba8d6e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

@@ -35,12 +35,12 @@ public class HitBox : MonoBehaviour
                 } else {
                     Destroy(hitbox);
                     PlayerManager.instance.checkHit = false;
-                    PlayerManager.instance.stylishPoint -= 0.4f;
+                    PlayerManager.instance.stylishPoint -= 0.2f;
                     hit.SetCriticalText("Miss");
                 }
             } else {
                 Destroy(hitbox);
-                PlayerManager.instance.stylishPoint -= 0.4f;
+                PlayerManager.instance.stylishPoint -= 0.2f;
                 hit.SetCriticalText("Miss");    
             }
         }

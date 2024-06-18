@@ -9,6 +9,10 @@ TagManager:
   - Enemy
   - Golem
   - Eldlich
+  - WoodGolem
+  - Graywolf
+  - Elk
+  - Darknight
   layers:
   - Default
   - TransparentFX

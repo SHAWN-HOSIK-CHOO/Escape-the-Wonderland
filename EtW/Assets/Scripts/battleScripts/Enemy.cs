@@ -43,7 +43,6 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("update");
         if (!PlayerManager.instance.gameOver) {
             target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
             float distance = Vector3.Distance(transform.position, target.position);

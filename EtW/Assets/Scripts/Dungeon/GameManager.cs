@@ -258,6 +258,11 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("SecondClearPass", secondClearPass);
         PlayerPrefs.SetInt("ThirdClearPass", thirdClearPass);
         PlayerPrefs.SetInt("FourthClearPass", fourthClearPass);
+        // PlayerPrefs.SetInt("PlayerStatATK", PlayerManager.instance.playerStatATK);
+        // PlayerPrefs.SetInt("PlayerStatDEF", PlayerManager.instance.playerStatDEF);
+        // PlayerPrefs.SetInt("PlayerStatAGI", PlayerManager.instance.playerStatAGI);
+        // PlayerPrefs.SetInt("PlayerStatHP", PlayerManager.instance.playerStatHP);
+        // PlayerPrefs.SetInt("PlayerStatMP", PlayerManager.instance.playerStatMP);
     }
 
     private void Load()
@@ -301,6 +306,51 @@ public class GameManager : MonoBehaviour
             fourthClearPass = 0;
             PlayerPrefs.SetInt("FourthClearPass", fourthClearPass);
         }
+
+        // if (PlayerPrefs.HasKey("PlayerStatATK"))
+        // {
+        //     PlayerManager.instance.playerStatATK = PlayerPrefs.GetInt("PlayerStatATK");
+        // }
+        // else
+        // {
+        //     PlayerPrefs.SetInt("PlayerStatATK", PlayerManager.instance.playerStatATK);
+        // }
+
+        // if (PlayerPrefs.HasKey("PlayerStatDEF"))
+        // {
+        //     PlayerManager.instance.playerStatDEF = PlayerPrefs.GetInt("PlayerStatDEF");
+        // }
+        // else
+        // {
+        //     PlayerPrefs.SetInt("PlayerStatDEF", PlayerManager.instance.playerStatDEF);
+        // }
+
+        // if (PlayerPrefs.HasKey("PlayerStatAGI"))
+        // {
+        //     PlayerManager.instance.playerStatAGI = PlayerPrefs.GetInt("PlayerStatAGI");
+        // }
+        // else
+        // {
+        //     PlayerPrefs.SetInt("PlayerStatAGI", PlayerManager.instance.playerStatAGI);
+        // }
+
+        // if (PlayerPrefs.HasKey("PlayerStatHP"))
+        // {
+        //     PlayerManager.instance.playerStatHP = PlayerPrefs.GetInt("PlayerStatHP");
+        // }
+        // else
+        // {
+        //     PlayerPrefs.SetInt("PlayerStatHP", PlayerManager.instance.playerStatHP);
+        // }
+
+        // if (PlayerPrefs.HasKey("PlayerStatMP"))
+        // {
+        //     PlayerManager.instance.playerStatMP = PlayerPrefs.GetInt("PlayerStatMP");
+        // }
+        // else
+        // {
+        //     PlayerPrefs.SetInt("PlayerStatMP", PlayerManager.instance.playerStatMP);
+        // }
     }
 
     private void WhatToDoWhenPlayerDead()

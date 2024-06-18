@@ -12,15 +12,21 @@ public class PlayerManager : MonoBehaviour
     public int meditationCount = 0;
     public bool isReady = false;
     public float stylishPoint = 0f;
-    public float increaseRate = 0.8f;
+    public float increaseRate = 2f;
     public bool fever = false;
     public int LVP = 0;
     public int tempLVP = 0;
     public int SP = 0;
-    public float playerStatATK;
-    public float playerStatDEF;
-    public float playerStatHP;
-    public float playerStatMP;
+    public int playerStatATK;
+    public int playerStatDEF;
+    public int playerStatAGI;
+    public int playerStatHP;
+    public int playerStatMP;
+    public float appliedATK;
+    public float appliedDEF;
+    public float appliedAGI;
+    public float appliedHP;
+    public float appliedMP;
     public float enemySpeed = 1f;
     public bool checkHit = false;
     public bool gameOver = false;
@@ -44,16 +50,19 @@ public class PlayerManager : MonoBehaviour
     private TextMeshProUGUI skillPoint_text;
 
     [SerializeField]
-    private TextMeshProUGUI ATK_text;
+    private TextMeshProUGUI ATK_point;
 
     [SerializeField]
-    private TextMeshProUGUI DEF_text;
+    private TextMeshProUGUI DEF_point;
 
     [SerializeField]
-    private TextMeshProUGUI HP_text;
+    private TextMeshProUGUI HP_point;
 
     [SerializeField]
-    private TextMeshProUGUI MP_text;
+    private TextMeshProUGUI MP_point;
+
+    [SerializeField]
+    private TextMeshProUGUI AGI_point;
     
     [SerializeField]
     private Player player;
@@ -65,24 +74,32 @@ public class PlayerManager : MonoBehaviour
     }
 
     void Start() {
-        playerStatATK = 1f;
-        playerStatDEF = 1f;
-        playerStatHP = 20f;
-        playerStatMP = 100f;
+        playerStatATK = 0;
+        playerStatDEF = 0;
+        playerStatAGI = 0;
+        playerStatHP = 0;
+        playerStatMP = 0;
+
+        appliedATK = 1f + playerStatATK * 0.2f;
+        appliedDEF = 1f + playerStatDEF * 0.05f;
+        appliedAGI = 7f + playerStatAGI * 0.1f;
+        appliedHP = 40f + playerStatHP * 2f;
+        appliedMP = 100f + playerStatMP * 10f;
     }
 
     void Update()
     {
-        if (tempLVP == 50) {
+        if (tempLVP == 20) {
             SP++;
             tempLVP = 0;
         }
         levelPoint_text.SetText("point : " + LVP.ToString());
         skillPoint_text.SetText("skill point : " + SP.ToString());
-        ATK_text.SetText(playerStatATK.ToString());
-        DEF_text.SetText(playerStatDEF.ToString());
-        HP_text.SetText(playerStatHP.ToString());
-        MP_text.SetText(playerStatMP.ToString());
+        ATK_point.SetText(playerStatATK.ToString());
+        DEF_point.SetText(playerStatDEF.ToString());
+        AGI_point.SetText(playerStatAGI.ToString());
+        HP_point.SetText(playerStatHP.ToString());
+        MP_point.SetText(playerStatMP.ToString());
 
         if (stylishPoint < 0f) {
             stylishPoint = 0f;
@@ -98,19 +115,25 @@ public class PlayerManager : MonoBehaviour
         JudgeRank();
 
         if (fever) {
-            player.moveSpeed = 15f;
             _feverTimer -= Time.deltaTime;
             if (_feverTimer <= 0) {
                 if (judgementCutActivated) {
-                    GameObject[] enemyArray = GameObject.FindGameObjectsWithTag("Enemy");
-                    int countOfEnemy = enemyArray.Length;
-                    LVP += countOfEnemy;
-                    foreach (GameObject tGO in enemyArray) {
+                    GameObject[] wolfArray = GameObject.FindGameObjectsWithTag("Wolf");
+                    int countOfWolf = wolfArray.Length;
+                    LVP += countOfWolf;
+                    foreach (GameObject tGO in wolfArray) {
                         Destroy(tGO);
                     }
+
+                    GameObject[] elkArray = GameObject.FindGameObjectsWithTag("Elk");
+                    int countOfElk = elkArray.Length;
+                    LVP += countOfElk;
+                    foreach (GameObject tGO in elkArray) {
+                        Destroy(tGO);
+                    }
+                    player.playerCurrentMp -= 150f;
                 }
                 
-                player.moveSpeed = 10f;
                 _feverTimer = 5f;
                 stylishPoint = 2f;
                 fever = false;

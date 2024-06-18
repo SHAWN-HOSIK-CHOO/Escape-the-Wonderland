@@ -116,7 +116,7 @@ public class Attack : MonoBehaviour
         if (activated) {
             player.playerATK *= 2f;
         } else {
-            player.playerATK = PlayerManager.instance.playerStatATK;
+            player.playerATK = PlayerManager.instance.appliedATK;
         }
     }
 }

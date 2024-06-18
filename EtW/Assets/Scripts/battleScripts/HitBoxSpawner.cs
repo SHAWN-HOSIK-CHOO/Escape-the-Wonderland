@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HitBoxSpawner : MonoBehaviour
 {
-    public GameObject prefabs;
     private GameObject hitbox;
+    public GameObject prefabs;
     public Transform SpawnTransform;
+    public Image meditationUI;
     private bool _meditationActivated = false;
     private float _meditationTimer = 10f;
     private float _meditationCoolTime;
@@ -59,7 +60,10 @@ public class HitBoxSpawner : MonoBehaviour
 
         if (_coolDown) {
             _meditationCoolTime -= Time.deltaTime;
+            meditationUI.fillAmount = _meditationCoolTime / 5f;
+            Debug.Log(_meditationCoolTime);
             if (_meditationCoolTime <= 0) {
+                meditationUI.fillAmount = 1f;
                 _coolDown = false;
             }
         }
