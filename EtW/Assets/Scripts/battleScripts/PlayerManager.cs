@@ -141,7 +141,7 @@ public class PlayerManager : MonoBehaviour
         }
 
         if (gameOver) {
-            Time.timeScale = 0f;
+            //Time.timeScale = 0f;
             ui.transform.GetChild(0).gameObject.SetActive(true);
         }
 

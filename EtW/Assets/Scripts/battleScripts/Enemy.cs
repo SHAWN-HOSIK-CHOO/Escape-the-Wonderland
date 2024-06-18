@@ -34,13 +34,7 @@ public class Enemy : MonoBehaviour
         _enemyRigidBody = GetComponent<Rigidbody2D>();
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
-
-    void Start()
-    {
-
-    }
-
-
+    
     void Update()
     {
         if (!PlayerManager.instance.gameOver) {
@@ -125,6 +119,11 @@ public class Enemy : MonoBehaviour
                 if (monsterType == eEnemyType.gatekeeper)
                 {
                     DungeonQuestManager.Instance.isGateKeeperDead = true;
+                }
+
+                if (monsterType == eEnemyType.boss)
+                {
+                    GameManager.Instance.IsBossCleared = true;
                 }
                 
                 Debug.Log("Remaining enemy cnt : " + (GameManager.SMapManager.monsterPcg.ChildCount - 1));

@@ -234,7 +234,9 @@ public class GameManager : MonoBehaviour
                         Debug.Log("Invalid Boss room index : called from gamemanager checkmapevents()");
                         break;
                 }
-            }   
+            }
+            //보스 클리어 플래그 되돌리기
+            IsBossCleared = false; 
         }
         else if (SMapManager.playerLocation == ePlayerLocation.Base)
         {
@@ -357,5 +359,6 @@ public class GameManager : MonoBehaviour
     {
         SMapManager.playerLocation = ePlayerLocation.Base;
         //TODO: 격려의 메세지 재생
+        IsPlayerDead = false;
     }
 }
