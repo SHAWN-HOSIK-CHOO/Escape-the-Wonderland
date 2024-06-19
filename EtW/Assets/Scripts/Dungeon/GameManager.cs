@@ -7,13 +7,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.Video;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] public Material[] skyboxArray = new Material[4]; 
+    
     private static GameManager _instance;
     public static  MapManager  SMapManager;
     public static  GameObject  SPlayer;
     public         GameObject  dungeonSelectText;
+    public         GameObject  videoController;
 
     //첫 세이브인가
     public bool isFirstTimePlaying;
@@ -33,6 +37,7 @@ public class GameManager : MonoBehaviour
     
     [SerializeField] public GameObject player;
     [SerializeField] public GameObject GOMapManager;
+    private                 Camera     _camera;
 
     public static GameManager Instance => _instance == null ? null : _instance;
 
@@ -74,24 +79,32 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("CanSkipIntroduction", 1);
         }
 
-        IsPlayerDead  = false;
-        IsBossCleared = false;
+        IsPlayerDead    = false;
+        IsBossCleared   = false;
+        
+        //TODO: ERASE
+        isFirstTimePlaying = true;
+
+        if (!isFirstTimePlaying)
+        {
+            videoController.SetActive(false);
+        }
+        else
+        {
+            videoController.GetComponent<VideoControl>().PlayIntro();
+        }
         
         Load();
     }
 
     void Start()
     {
-        if (isFirstTimePlaying)
-        {
-            //TODO: 애니메이션 재생 및 튜토리얼 진행
-        }
-        
+        _camera            = Camera.main;
         CheckGameStatus();
         
         SMapManager.GenerateMapAndPlaceCharacter(ePlayerLocation.Base);
     }
-
+    
     private void Update()
     {
         //TODO: ERASE
@@ -120,7 +133,7 @@ public class GameManager : MonoBehaviour
         }
         // Debug Codes end----------------------------------------
         //TODO: ERASE
-
+        
         if (isAllPassClear)
         {
             DisplayEnding();
@@ -140,7 +153,7 @@ public class GameManager : MonoBehaviour
 
     private void ProcessInput()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.M))
         {
             DungeonQuestManager.Instance.OpenQuestUI();
         }

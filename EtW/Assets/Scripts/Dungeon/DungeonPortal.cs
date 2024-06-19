@@ -28,22 +28,26 @@ public class DungeonPortal : MonoBehaviour
     {
       if (Input.GetKeyDown(KeyCode.Alpha1))
       {
+        RenderSettings.skybox = GameManager.Instance.skyboxArray[0];
         Debug.Log("Alpha1 called");
         GameManager.Instance.dungeonSelectText.SetActive(false);
         GameManager.SMapManager.GenerateMapAndPlaceCharacter(ePlayerLocation.Dungeon0);
       }
       else if (Input.GetKeyDown(KeyCode.Alpha2))
       {
+        RenderSettings.skybox = GameManager.Instance.skyboxArray[1];
         GameManager.Instance.dungeonSelectText.SetActive(false);
         GameManager.SMapManager.GenerateMapAndPlaceCharacter(ePlayerLocation.Dungeon1);
       }
       else if (Input.GetKeyDown(KeyCode.Alpha3))
       {
+        RenderSettings.skybox = GameManager.Instance.skyboxArray[2];
         GameManager.Instance.dungeonSelectText.SetActive(false);
         GameManager.SMapManager.GenerateMapAndPlaceCharacter(ePlayerLocation.Dungeon2);
       }
       else if (Input.GetKeyDown(KeyCode.Alpha4))
       {
+        RenderSettings.skybox = GameManager.Instance.skyboxArray[3];
         GameManager.Instance.dungeonSelectText.SetActive(false);
         GameManager.SMapManager.GenerateMapAndPlaceCharacter(ePlayerLocation.Dungeon3);
       }
