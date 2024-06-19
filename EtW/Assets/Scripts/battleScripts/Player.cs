@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
     private bool _isHit = false;
     private bool _start = true;
 
+    public Light sspotLight;
+    
     private void Awake() {
         _playerSpriteRenderer = GetComponent<SpriteRenderer>();
         _playerRigidbody = GetComponent<Rigidbody2D>();
@@ -129,8 +131,11 @@ public class Player : MonoBehaviour
 
         if (velocity.x != 0.0f)
         {
-            bool flipped = velocity.x < 0.0f;
-            this.transform.rotation = Quaternion.Euler(new Vector3(0.0f, ( flipped ? 180.0f : 0.0f ), 0.0f));
+            bool       flipped = velocity.x < 0.0f;
+            this.transform.rotation       = Quaternion.Euler(new Vector3(0.0f, ( flipped ? 180.0f : 0.0f ), 0.0f));
+            sspotLight.transform.localPosition = new Vector3(sspotLight.transform.localPosition.x,
+                                                        sspotLight.transform.localPosition.y, (flipped ? 20.0f : -20.0f) );
+            sspotLight.transform.localRotation = Quaternion.Euler(new Vector3(0.0f, ( flipped ? 180.0f : 0.0f ), 0.0f));
         }
 
         animator.SetFloat("Speed",Mathf.Abs(velocity.magnitude * playerAGI));

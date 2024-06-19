@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabs: {fileID: 1395309584878016258, guid: c1fada47e5d7b354696e067169f044ee, type: 3}
   SpawnTransform: {fileID: 3425617706196500204}
+  meditationUI: {fileID: 0}
 --- !u!1 &912771366890211133
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,14 +178,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 4193100891332283995}
   isLeft: 0
-  moveSpeed: 10
   playerMaxHp: 0
   playerCurrentHp: 0
   playerMaxMp: 0
   playerCurrentMp: 0
   playerATK: 1
   playerDEF: 1
+  playerAGI: 1
   reductionRate: 1
+  sspotLight: {fileID: 0}
 --- !u!114 &6664455950237058694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,6 +217,8 @@ MonoBehaviour:
   firstSkillActivated: 0
   secondSkillActivated: 0
   thirdSkillActivated: 0
+  endure: 0
+  invincible: 0
   firstSkillImage: {fileID: 0}
   secondSkillImage: {fileID: 0}
   thirdSkillImage: {fileID: 0}
@@ -503,8 +507,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.024101883, y: -0.06159365}
-  m_Size: {x: 0.33396482, y: 0.68399763}
+  m_Offset: {x: -0.056735367, y: -0.19023827}
+  m_Size: {x: 0.65569526, y: 0.7901848}
   m_Direction: 0
 --- !u!1 &1914806196054029760
 GameObject:

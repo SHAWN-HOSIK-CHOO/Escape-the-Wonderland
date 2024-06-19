@@ -127,6 +127,7 @@ public class GameManager : MonoBehaviour
             return;
         }
         
+        ProcessInput();
         CheckPlayerStatus();
         CheckGameStatus();
         CheckMapEvents();
@@ -135,6 +136,14 @@ public class GameManager : MonoBehaviour
     private void DisplayEnding()
     {
         //TODO: 탈출하는 애니메이션 등 재생 
+    }
+
+    private void ProcessInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            DungeonQuestManager.Instance.OpenQuestUI();
+        }
     }
     
     private void CheckPlayerStatus()

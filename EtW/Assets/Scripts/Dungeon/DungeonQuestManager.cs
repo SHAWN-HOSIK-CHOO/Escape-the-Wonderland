@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -16,6 +17,8 @@ public class DungeonQuestManager : MonoBehaviour
    [Header("For Eliminate Quest")] public int  TargetCount;
    [Header("For Hunt Quest")]      public bool isGateKeeperDead;
    [Header("For Find Quest")]      public bool foundPortal;
+
+   [Header("Quest Type Notification")] public TMP_Text questText;
    
    public eQuestType CurrentQuestType
    {
@@ -44,8 +47,40 @@ public class DungeonQuestManager : MonoBehaviour
       {
          Destroy(this.gameObject);
       }
+      
+      questText.gameObject.SetActive(false);
    }
 
+   public void OpenQuestUI()
+   {
+      StartCoroutine(ShowQuestType());
+   }
+
+   IEnumerator ShowQuestType()
+   {
+      questText.gameObject.SetActive(true);
+
+      switch (CurrentQuestType)
+      {
+         case eQuestType.Eliminate:
+            questText.text = "Eliminate " + TargetCount + " monsters";
+            break;
+         case eQuestType.Find:
+            questText.text = "Find Portal";
+            break;
+         case eQuestType.Hunt:
+            questText.text = "Hunt down the gatekeeper";
+            break;
+         default:
+            Debug.Log("Wrong type called from DungeonQuestManager.ShowQuestType()");
+            break;
+      }
+
+      yield return new WaitForSeconds(2.5f);
+      
+      questText.gameObject.SetActive(false);
+   }
+   
    public void GenerateQuest()
    {
       int index = Random.Range(0, 3);

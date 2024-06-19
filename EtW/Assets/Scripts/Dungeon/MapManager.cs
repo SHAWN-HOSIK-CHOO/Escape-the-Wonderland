@@ -83,6 +83,8 @@ public class MapManager : MonoBehaviour
 
     private void GenerateBase()
     {
+        GameManager.SPlayer.GetComponent<Player>().sspotLight.range     = 22.0f;
+        GameManager.SPlayer.GetComponent<Player>().sspotLight.intensity = 30.0f;
         dungeonMapHolder.SetActive(false);
         bossMapHolder.SetActive(false);
         //TODO: 맵 구조에 맞춰서 스폰 위치 설정 필요
@@ -92,6 +94,8 @@ public class MapManager : MonoBehaviour
 
     private void GenerateDungeon(ePlayerLocation dungeonNumber)
     {
+        GameManager.SPlayer.GetComponent<Player>().sspotLight.range     = 40.0f;
+        GameManager.SPlayer.GetComponent<Player>().sspotLight.intensity = 30.0f;
         DungeonQuestManager.Instance.GenerateQuest();
         
         baseMapHolder.SetActive(false);
@@ -106,10 +110,14 @@ public class MapManager : MonoBehaviour
         
         monsterPcg = monsterGenerator.GetComponent<MonsterPcg>();
         monsterPcg.ProceduralGenMonsters();
+        
+        DungeonQuestManager.Instance.OpenQuestUI();
     }
 
     private void GenerateBossField(ePlayerLocation location)
     {
+        GameManager.SPlayer.GetComponent<Player>().sspotLight.range     = 40.0f;
+        GameManager.SPlayer.GetComponent<Player>().sspotLight.intensity = 30.0f;
         dungeonMapHolder.SetActive(false);
         baseMapHolder.SetActive(false);
 
