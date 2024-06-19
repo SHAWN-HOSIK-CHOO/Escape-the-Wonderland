@@ -26,6 +26,7 @@ public class UIInteraction : MonoBehaviour
     public Image[] skillUI = new Image[3];
     public Image[] skillUIAlpha = new Image[3];
     public Player player;
+    public TextMeshProUGUI skillDescription;
     
     public void Play() {
         Time.timeScale = 1f;
@@ -244,5 +245,58 @@ public class UIInteraction : MonoBehaviour
         } else {
             notiText.SetText("Not Enough SP");
         }
+    }
+
+    private void Update() {
+        if (IsPointerOverUIElement(out string uiElementName))
+        {
+            if (uiElementName == "Askill1") {
+                skillDescription.SetText("사용시 스타일리쉬 포인트를 2만큼 증가시킵니다.\n(MP소모 : 30)");
+            } else if (uiElementName == "Askill2") {
+                skillDescription.SetText("획득시 집중 성공시 얻는 스타일리쉬 포인트의 수치가 증가합니다.");
+            } else if (uiElementName == "Askill3") {
+                skillDescription.SetText("초집중 상태가 종료될때 맵에있는 모든 늑대와 사슴을 공격합니다.\n(MP소모 : 250)");
+            } else if (uiElementName == "Dskill1") {
+                skillDescription.SetText("사용시 시전자의 방어력을 증가시킵니다.\n(MP소모 : 30)");
+            } else if (uiElementName == "Dskill2") {
+                skillDescription.SetText("획득시 방어력이 영구적으로 올라갑니다.");
+            } else if (uiElementName == "Dskill3") {
+                skillDescription.SetText("사용시 일정시간 무적이 됩니다.\n(MP소모 : 200)");
+            } else if (uiElementName == "Uskill1") {
+                skillDescription.SetText("사용시 일정시간 이동속도가 증가합니다.\n(MP소모 : 30)");
+            } else if (uiElementName == "Uskill2") {
+                skillDescription.SetText("사용시 시전자의 체력을 회복합니다.\n(MP소모 : 60)");
+            } else if (uiElementName == "Uskill3") {
+                skillDescription.SetText("사용시 모든 적의 이동속도를 대폭 감속시킵니다.\n(MP소모 : 150)");
+            } else {
+                skillDescription.SetText("");
+            }
+        }
+    }
+
+
+    private bool IsPointerOverUIElement(out string uiElementName)
+    {
+        uiElementName = null;
+
+        PointerEventData pointerEventData = new PointerEventData(EventSystem.current)
+        {
+            position = Input.mousePosition
+        };
+
+        List<RaycastResult> raycastResults = new List<RaycastResult>();
+
+        EventSystem.current.RaycastAll(pointerEventData, raycastResults);
+
+        foreach (RaycastResult result in raycastResults)
+        {
+            if (result.gameObject != null)
+            {
+                uiElementName = result.gameObject.name;
+                return true;
+            }
+        }
+
+        return false;
     }
 }
