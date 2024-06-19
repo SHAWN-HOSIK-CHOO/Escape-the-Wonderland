@@ -1,9 +1,12 @@
 /*
  * Author : Hosik Choo
  */
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public enum ePlayerLocation
 {
@@ -83,6 +86,7 @@ public class MapManager : MonoBehaviour
 
     private void GenerateBase()
     {
+        RenderSettings.skybox                                           = GameManager.Instance.skyboxArray[0];
         GameManager.SPlayer.GetComponent<Player>().sspotLight.range     = 22.0f;
         GameManager.SPlayer.GetComponent<Player>().sspotLight.intensity = 30.0f;
         dungeonMapHolder.SetActive(false);
