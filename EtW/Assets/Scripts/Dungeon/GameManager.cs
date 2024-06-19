@@ -249,7 +249,7 @@ public class GameManager : MonoBehaviour
         }
         else if (SMapManager.playerLocation == ePlayerLocation.Base)
         {
-            
+
         }
     }
 
@@ -367,6 +367,10 @@ public class GameManager : MonoBehaviour
     private void WhatToDoWhenPlayerDead()
     {
         SMapManager.playerLocation = ePlayerLocation.Base;
+        SMapManager.roomDungeonGen.placeablePositions.Clear();
+        SMapManager.roomDungeonGen.roamablePositions.Clear();
+        SMapManager.roomDungeonGen.allWallPositions.Clear();
+        SMapManager.GenerateMapAndPlaceCharacter(SMapManager.playerLocation);
         //TODO: 격려의 메세지 재생
         IsPlayerDead = false;
     }

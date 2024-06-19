@@ -89,9 +89,8 @@ public class Player : MonoBehaviour
 
 
         if (playerCurrentHp <= 0) {
-            PlayerManager.instance.gameOver   = true;
             GameManager.Instance.IsPlayerDead = true;
-            this.gameObject.SetActive(false);
+            _start = true;
         }
 
 
