@@ -17,7 +17,6 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D _enemyRigidBody;
     public float Hp = 10f;
     public float moveSpeed = 5f;
-    public float rotateSpeed = 10f;
     public float fiedlOfVision = 5f;
     public float enemyATK = 1.5f;
     public bool isHit = false;

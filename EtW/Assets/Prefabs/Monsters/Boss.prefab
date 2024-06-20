@@ -135,11 +135,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 934a3659010fe2c4ba55d785bfe33f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hp: 1
-  moveSpeed: 5
-  rotateSpeed: 10
+  Hp: 50
+  moveSpeed: 4
   fiedlOfVision: 15
-  enemyATK: 5
+  enemyATK: 3
   isHit: 0
   animator: {fileID: -6393547438809515776}
   monsterType: 2

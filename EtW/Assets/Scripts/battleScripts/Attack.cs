@@ -114,7 +114,7 @@ public class Attack : MonoBehaviour
 
     public void AttackReinforced(bool activated) {
         if (activated) {
-            player.playerATK *= 2f;
+            player.playerATK = 3f;
         } else {
             player.playerATK = PlayerManager.instance.appliedATK;
         }
