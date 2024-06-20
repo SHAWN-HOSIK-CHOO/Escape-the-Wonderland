@@ -274,7 +274,7 @@ public class GameManager : MonoBehaviour
         }
         else if (SMapManager.playerLocation == ePlayerLocation.Base)
         {
-
+            SMapManager.CurrentDungeonFloorCount = 0;
         }
         else if (SMapManager.playerLocation == ePlayerLocation.Number)
         {
