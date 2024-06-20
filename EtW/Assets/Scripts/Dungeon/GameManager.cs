@@ -202,6 +202,8 @@ public class GameManager : MonoBehaviour
             //SMapManager.GenerateMapAndPlaceCharacter(...)함수에서 SMapManager.IsCurrentFloorCleared를 다시 false로 돌려놓음
             if (SMapManager.IsCurrentFloorCleared)
             {
+                SMapManager.IsCurrentFloorCleared = false;
+                
                 SMapManager.roomDungeonGen.placeablePositions.Clear();
                 SMapManager.roomDungeonGen.roamablePositions.Clear();
                 SMapManager.roomDungeonGen.allWallPositions.Clear();
