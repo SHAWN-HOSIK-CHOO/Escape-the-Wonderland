@@ -66,18 +66,10 @@ public class DungeonPortal : MonoBehaviour
       else if (portalType == ePortalType.BasePortal)
       {
         Debug.Log("Base Portal Entered");
-        StartCoroutine(nameof(ShowSelectionText));
+        GameManager.Instance.WhatDoesTheRabbitSay("그래서 어디로 갈건데? 1번 던전, 2번 던전, 3번 던전, 4번 던전 중에서 알아서 골라");
         _isPortalCalled = true;
       }
     }
   }
-
-  IEnumerator ShowSelectionText()
-  {
-    Debug.Log("Crt entered");
-    GameManager.Instance.dungeonSelectText.SetActive(true);
-    yield return  new WaitForSeconds(3.0f);
-    GameManager.Instance.dungeonSelectText.SetActive(false);
-    _isPortalCalled = false;
-  }
+  
 }

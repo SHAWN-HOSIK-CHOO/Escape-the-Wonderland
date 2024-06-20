@@ -13,6 +13,7 @@ TagManager:
   - Graywolf
   - Elk
   - Darknight
+  - Tree
   layers:
   - Default
   - TransparentFX

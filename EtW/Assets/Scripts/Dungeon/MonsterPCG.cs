@@ -22,15 +22,21 @@ public class MonsterPcg : MonoBehaviour
    [SerializeField] public GameObject gateKeeperMonster;
    [SerializeField] public GameObject toNextFloorPortal;
 
+   //몬스터 배치 시 나무는 카운트 안햄 (빼버리기)
+   private int _treeCnt    = 0;
+
    public void ProceduralGenMonsters()
    {
       roomAndFloorsToPlaceMonsters = roomDungeonGen.placeablePositions;
+      _treeCnt                     = 0;
       PlaceMonsters();
+
+      int curChildCnt = ChildCount;
 
       if (DungeonQuestManager.Instance.CurrentQuestType == DungeonQuestManager.eQuestType.Eliminate)
       {
-         DungeonQuestManager.Instance.TargetCount = ChildCount / 2;
-         Debug.Log("Target Count : " + DungeonQuestManager.Instance.TargetCount);
+         DungeonQuestManager.Instance.TargetCount = curChildCnt - (( ChildCount - _treeCnt >= 0 ) ? ((ChildCount - _treeCnt >= 10) ? 10 : ChildCount - _treeCnt) : 0);
+         Debug.Log("Target Count : " + DungeonQuestManager.Instance.TargetCount + "Cur Count : " + curChildCnt);
       }
    }
 
@@ -54,7 +60,6 @@ public class MonsterPcg : MonoBehaviour
       foreach (var room in roomAndFloorsToPlaceMonsters)
       {
          cnt++;
-         
          List<Vector2Int> positionList     = room.Value.ToList();
          List<GameObject> selectedMonsters = SelectMonsters(Random.Range(minMonsterPerRoom, maxMonsterPerRoom));
 
@@ -115,6 +120,12 @@ public class MonsterPcg : MonoBehaviour
       for (int i = 0; i < monsterCount; i++)
       {
          GameObject monster = placeableMonsters[Random.Range(0, placeableMonsters.Count - 1)];
+
+         if (monster.CompareTag("Tree"))
+         {
+            _treeCnt++;
+         }
+         
          retSelectedMonsters.Add(monster);
       }
       

@@ -19,8 +19,11 @@ public class GameManager : MonoBehaviour
     public         GameObject  dungeonSelectText;
     public         GameObject  videoController;
 
+    public GameObject ccanvas;
+
     //첫 세이브인가
     public bool isFirstTimePlaying;
+    public bool shouldPlayEnding;
     
     //게임 클리어 통행증
     [Header("1st Pass to Clear Game")]
@@ -38,6 +41,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject player;
     [SerializeField] public GameObject GOMapManager;
     private                 Camera     _camera;
+
+    [Header("토끼의 메세지")] public GameObject rabbitMsg;
+    [Header("엔딩 버튼")]   public GameObject endingBtn;
 
     public static GameManager Instance => _instance == null ? null : _instance;
 
@@ -79,15 +85,17 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("CanSkipIntroduction", 1);
         }
 
-        IsPlayerDead    = false;
-        IsBossCleared   = false;
-        
+        IsPlayerDead     = false;
+        IsBossCleared    = false;
+        shouldPlayEnding = true;
+        rabbitMsg.SetActive(false);
         //TODO: ERASE
-        isFirstTimePlaying = true;
+        //isFirstTimePlaying = true;
 
         if (!isFirstTimePlaying)
         {
             videoController.SetActive(false);
+            SMapManager.GenerateMapAndPlaceCharacter(ePlayerLocation.Base);
         }
         else
         {
@@ -101,7 +109,7 @@ public class GameManager : MonoBehaviour
     {
         _camera            = Camera.main;
         CheckGameStatus();
-        SMapManager.playerLocation = ePlayerLocation.Number;
+        SMapManager.playerLocation = ePlayerLocation.Number; // NONE
         //SMapManager.GenerateMapAndPlaceCharacter(ePlayerLocation.Base);
     }
     
@@ -134,9 +142,11 @@ public class GameManager : MonoBehaviour
         // Debug Codes end----------------------------------------
         //TODO: ERASE
         
-        if (isAllPassClear)
+        if (isAllPassClear && shouldPlayEnding)
         {
-            DisplayEnding();
+            shouldPlayEnding = false;
+            WhatDoesTheRabbitSay("...",1.0f);
+            endingBtn.SetActive(true);
             return;
         }
         
@@ -144,11 +154,6 @@ public class GameManager : MonoBehaviour
         CheckPlayerStatus();
         CheckGameStatus();
         CheckMapEvents();
-    }
-
-    private void DisplayEnding()
-    {
-        //TODO: 탈출하는 애니메이션 등 재생 
     }
 
     private void ProcessInput()
@@ -238,6 +243,7 @@ public class GameManager : MonoBehaviour
             
             if (IsBossCleared)
             {
+                WhatDoesTheRabbitSay("좋아 " + SMapManager.playerLocation+" 의 통행증을 얻었어",4.0f);
                 switch (SMapManager.playerLocation)
                 {
                     case ePlayerLocation.Boss1:
@@ -256,9 +262,15 @@ public class GameManager : MonoBehaviour
                         Debug.Log("Invalid Boss room index : called from gamemanager checkmapevents()");
                         break;
                 }
+                
+                SMapManager.playerLocation = ePlayerLocation.Base;
+                SMapManager.roomDungeonGen.placeablePositions.Clear();
+                SMapManager.roomDungeonGen.roamablePositions.Clear();
+                SMapManager.roomDungeonGen.allWallPositions.Clear();
+                SMapManager.GenerateMapAndPlaceCharacter(SMapManager.playerLocation);
             }
             //보스 클리어 플래그 되돌리기
-            IsBossCleared = false; 
+            IsBossCleared              = false; 
         }
         else if (SMapManager.playerLocation == ePlayerLocation.Base)
         {
@@ -388,7 +400,21 @@ public class GameManager : MonoBehaviour
         SMapManager.roomDungeonGen.roamablePositions.Clear();
         SMapManager.roomDungeonGen.allWallPositions.Clear();
         SMapManager.GenerateMapAndPlaceCharacter(SMapManager.playerLocation);
-        //TODO: 격려의 메세지 재생
+        StartCoroutine(DisplayRabbitMsg("야 잘 좀 해봐...... 그래가지고 탈출 할 수 있겠어?", 3.0f));
         IsPlayerDead = false;
+    }
+
+    // 외부 클래스에서 부르는 용도
+    public void WhatDoesTheRabbitSay(string msg, float time = 3.0f)
+    {
+        StartCoroutine(DisplayRabbitMsg(msg, time));
+    }
+    
+    IEnumerator DisplayRabbitMsg(string msg, float time)
+    {
+        rabbitMsg.GetComponentInChildren<TMP_Text>().SetText(msg);
+        rabbitMsg.SetActive(true);
+        yield return new WaitForSeconds(time);
+        rabbitMsg.SetActive(false);
     }
 }

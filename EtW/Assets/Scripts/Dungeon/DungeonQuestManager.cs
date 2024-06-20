@@ -53,7 +53,23 @@ public class DungeonQuestManager : MonoBehaviour
 
    public void OpenQuestUI()
    {
-      StartCoroutine(ShowQuestType());
+      //StartCoroutine(ShowQuestType());
+      
+      switch (CurrentQuestType)
+      {
+         case eQuestType.Eliminate:
+            GameManager.Instance.WhatDoesTheRabbitSay(   "아무 몬스터"+ TargetCount +" 마리만 남겨봐", 2.5f);
+            break;
+         case eQuestType.Find:
+            GameManager.Instance.WhatDoesTheRabbitSay("이번에는 포탈을 찾아봐", 2.5f);
+            break;
+         case eQuestType.Hunt:
+            GameManager.Instance.WhatDoesTheRabbitSay("이번 층을 막고 있는 몬스터가 있어, 게이트키퍼를 제거해!", 2.5f);
+            break;
+         default:
+            Debug.Log("Wrong type called from DungeonQuestManager.ShowQuestType()");
+            break;
+      }
    }
 
    IEnumerator ShowQuestType()
