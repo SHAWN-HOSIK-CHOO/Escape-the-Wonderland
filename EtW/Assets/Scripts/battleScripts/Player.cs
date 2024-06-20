@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +26,8 @@ public class Player : MonoBehaviour
     private float _godModeTimer = 1f;
     private bool _isHit = false;
     private bool _start = true;
+    private bool _hpRegenerationStart = false;
+    private bool _mpRegenerationStart = false;
 
     public Light sspotLight;
     public Slider HP;
@@ -43,9 +46,6 @@ public class Player : MonoBehaviour
         _playerRigidbody = GetComponent<Rigidbody2D>();
         _playerCollider = GetComponent<BoxCollider2D>();
         _skill = GetComponent<Skill>();
-
-        StartCoroutine("MPRegeneration");
-        StartCoroutine("HPRegeneration");
     }
 
     IEnumerator MPRegeneration() {
@@ -101,10 +101,24 @@ public class Player : MonoBehaviour
 
         if (playerCurrentMp > playerMaxMp) {
             playerCurrentMp = playerMaxMp;
+            _hpRegenerationStart = false;
+            StopCoroutine("MPRegeneration");
+        } else if (playerCurrentMp < playerMaxMp) {
+            if (!_hpRegenerationStart) {
+                StartCoroutine("MPRegeneration");
+                _hpRegenerationStart = true;
+            }
         }
 
         if (playerCurrentHp > playerMaxHp) {
             playerCurrentHp = playerMaxHp;
+            _mpRegenerationStart = false;
+            StopCoroutine("HPRegeneration");
+        }else if (playerCurrentHp < playerMaxHp) {
+            if (!_mpRegenerationStart) {
+                StartCoroutine("HPRegeneration");
+                _mpRegenerationStart = true;
+            }
         }
 
         

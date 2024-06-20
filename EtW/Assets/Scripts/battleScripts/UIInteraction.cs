@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIInteraction : MonoBehaviour
 {
@@ -33,6 +34,10 @@ public class UIInteraction : MonoBehaviour
     
     public void Play() {
         Time.timeScale = 1f;
+    }
+
+    public void ToTitle() {
+        SceneManager.LoadScene("introScene");
     }
 
     public void ATKPlus() {
