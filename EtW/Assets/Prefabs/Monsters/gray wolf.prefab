@@ -139,7 +139,7 @@ MonoBehaviour:
   moveSpeed: 4
   rotateSpeed: 10
   fiedlOfVision: 15
-  enemyATK: 2
+  enemyATK: 1
   isHit: 0
   animator: {fileID: -6393547438809515776}
   monsterType: 0

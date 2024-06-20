@@ -399,6 +399,7 @@ public class GameManager : MonoBehaviour
         SMapManager.roomDungeonGen.placeablePositions.Clear();
         SMapManager.roomDungeonGen.roamablePositions.Clear();
         SMapManager.roomDungeonGen.allWallPositions.Clear();
+        SMapManager.CurrentDungeonFloorCount = 0;
         SMapManager.GenerateMapAndPlaceCharacter(SMapManager.playerLocation);
         StartCoroutine(DisplayRabbitMsg("야 잘 좀 해봐...... 그래가지고 탈출 할 수 있겠어?", 3.0f));
         IsPlayerDead = false;

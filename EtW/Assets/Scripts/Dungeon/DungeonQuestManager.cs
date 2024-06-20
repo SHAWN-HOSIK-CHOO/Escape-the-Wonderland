@@ -53,7 +53,6 @@ public class DungeonQuestManager : MonoBehaviour
 
    public void OpenQuestUI()
    {
-      //StartCoroutine(ShowQuestType());
       
       switch (CurrentQuestType)
       {
@@ -70,31 +69,6 @@ public class DungeonQuestManager : MonoBehaviour
             Debug.Log("Wrong type called from DungeonQuestManager.ShowQuestType()");
             break;
       }
-   }
-
-   IEnumerator ShowQuestType()
-   {
-      questText.gameObject.SetActive(true);
-
-      switch (CurrentQuestType)
-      {
-         case eQuestType.Eliminate:
-            questText.text = "Eliminate " + TargetCount + " monsters";
-            break;
-         case eQuestType.Find:
-            questText.text = "Find Portal";
-            break;
-         case eQuestType.Hunt:
-            questText.text = "Hunt down the gatekeeper";
-            break;
-         default:
-            Debug.Log("Wrong type called from DungeonQuestManager.ShowQuestType()");
-            break;
-      }
-
-      yield return new WaitForSeconds(2.5f);
-      
-      questText.gameObject.SetActive(false);
    }
    
    public void GenerateQuest()
