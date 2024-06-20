@@ -89,8 +89,8 @@ public class GameManager : MonoBehaviour
         IsBossCleared    = false;
         shouldPlayEnding = true;
         rabbitMsg.SetActive(false);
-        //TODO: ERASE
-        //isFirstTimePlaying = true;
+        //TODO: ERASE 현재 player prefs를 시스템에서 사용하기 때문에 디버깅을 위해서 아래 코드를 추가함
+        isFirstTimePlaying = true;
 
         if (!isFirstTimePlaying)
         {
