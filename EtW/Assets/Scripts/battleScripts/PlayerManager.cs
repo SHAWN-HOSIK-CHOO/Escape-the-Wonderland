@@ -37,7 +37,6 @@ public class PlayerManager : MonoBehaviour
     public bool judgementCutActivated = false;
     private float _feverTimer = 5f;
     private float _realTimer = 1f;
-    private bool _pausePanelOpen = false;
     private bool _statusPanelOpen = false;
 
     [SerializeField]
@@ -150,15 +149,9 @@ public class PlayerManager : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            if (!_pausePanelOpen) {
-                Time.timeScale = 0f;
-                ui.transform.GetChild(1).gameObject.SetActive(true);
-                _pausePanelOpen = true;
-            } else {
-                Time.timeScale = 1f;
-                ui.transform.GetChild(1).gameObject.SetActive(false);
-                _pausePanelOpen = false;
-            }
+            Time.timeScale = 0f;
+            ui.transform.GetChild(1).gameObject.SetActive(true);
+
         }
 
         if (Input.GetKeyDown(KeyCode.K)) {

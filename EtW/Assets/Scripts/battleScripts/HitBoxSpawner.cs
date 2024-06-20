@@ -9,6 +9,8 @@ public class HitBoxSpawner : MonoBehaviour
     public GameObject prefabs;
     public Transform SpawnTransform;
     public Image meditationUI;
+    public SpriteRenderer window;
+    public Hit hit;
     private bool _meditationActivated = false;
     private float _meditationTimer = 10f;
     private float _meditationCoolTime;
@@ -16,12 +18,13 @@ public class HitBoxSpawner : MonoBehaviour
 
     void Start()
     {
-
+    
     }
 
     public void StartMeditation() {
         // Time.timeScale = 0.1f;
         _meditationActivated = true;
+        window.color = new Color(255, 255, 255, 0.3f);
         StartCoroutine("MeditationRoutine");
     }
 
@@ -30,6 +33,8 @@ public class HitBoxSpawner : MonoBehaviour
         _meditationTimer = 10f;
         _meditationActivated = false;
         Time.timeScale = 1f;
+        window.color = new Color(255, 255, 255, 0f);
+        hit.SetCriticalText("");
         StopCoroutine("MeditationRoutine");
     }
 
