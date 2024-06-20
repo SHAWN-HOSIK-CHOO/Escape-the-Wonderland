@@ -94,6 +94,7 @@ public class MapManager : MonoBehaviour
         //TODO: 맵 구조에 맞춰서 스폰 위치 설정 필요
         baseMapHolder.SetActive(true);
         GameManager.SPlayer.transform.position = Vector3.zero;
+        Debug.Log("Current floor count called from base : " + CurrentDungeonFloorCount);
     }
 
     private void GenerateDungeon(ePlayerLocation dungeonNumber)
@@ -107,8 +108,9 @@ public class MapManager : MonoBehaviour
         dungeonMapHolder.SetActive(true);
         
         CurrentDungeonFloorCount++;
-        roomDungeonGen.GenerateDungeon(dungeonNumber);
+        Debug.Log("Current Floor : " + CurrentDungeonFloorCount);
         IsCurrentFloorCleared = false;
+        roomDungeonGen.GenerateDungeon(dungeonNumber);
         
         player.transform.position = new Vector3(roomDungeonGen.playerStartPos.x, roomDungeonGen.playerStartPos.y, -10);
         

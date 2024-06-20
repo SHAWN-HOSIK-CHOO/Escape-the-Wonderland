@@ -73,7 +73,7 @@ public class DungeonQuestManager : MonoBehaviour
    
    public void GenerateQuest()
    {
-      int index = Random.Range(0, 3);
+      int index = Random.Range(0, 2);
       
       if (index == 0)
       {
@@ -93,7 +93,7 @@ public class DungeonQuestManager : MonoBehaviour
          CurrentQuestType = eQuestType.None;
       }
       
-      Debug.Log("Current Quest is : " + CurrentQuestType);
+      //Debug.Log("Current Quest is : " + CurrentQuestType);
    }
 
    public bool IsCurrentQuestCleared()
@@ -107,7 +107,7 @@ public class DungeonQuestManager : MonoBehaviour
             _isCurrentQuestCleared = foundPortal;
             break;
          case eQuestType.Eliminate:
-            _isCurrentQuestCleared = GameManager.SMapManager.monsterPcg.ChildCount <= TargetCount;
+            _isCurrentQuestCleared = GameManager.SMapManager.monsterPcg.ChildCount < TargetCount;
             break;
          case eQuestType.None:
          default:
