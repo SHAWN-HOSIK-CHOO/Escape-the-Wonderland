@@ -6585,6 +6585,17 @@ Canvas:
   m_CorrespondingSourceObject: {fileID: 914227202984401619, guid: f71dfd8bf89f5c84ebd9e642ec343070, type: 3}
   m_PrefabInstance: {fileID: 593474180}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &95001055 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8839663363535495036, guid: f71dfd8bf89f5c84ebd9e642ec343070, type: 3}
+  m_PrefabInstance: {fileID: 593474180}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &95641011
 GameObject:
   m_ObjectHideFlags: 0
@@ -36955,6 +36966,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 282048945}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &625357645 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5651632824462279727, guid: f71dfd8bf89f5c84ebd9e642ec343070, type: 3}
+  m_PrefabInstance: {fileID: 593474180}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &630095891
 GameObject:
   m_ObjectHideFlags: 0
@@ -54531,6 +54553,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 527497871}
     - target: {fileID: 6996938654605766826, guid: 090e55332721b964b8a8f2693bc19c8c, type: 3}
+      propertyPath: AGIPlusBtn
+      value: 
+      objectReference: {fileID: 135162958}
+    - target: {fileID: 6996938654605766826, guid: 090e55332721b964b8a8f2693bc19c8c, type: 3}
+      propertyPath: ATKPlusBtn
+      value: 
+      objectReference: {fileID: 95001055}
+    - target: {fileID: 6996938654605766826, guid: 090e55332721b964b8a8f2693bc19c8c, type: 3}
+      propertyPath: DEFPlusBtn
+      value: 
+      objectReference: {fileID: 625357645}
+    - target: {fileID: 6996938654605766826, guid: 090e55332721b964b8a8f2693bc19c8c, type: 3}
       propertyPath: skillManager
       value: 
       objectReference: {fileID: 435894031}
@@ -54649,6 +54683,9 @@ MonoBehaviour:
   appliedAGI: 0
   appliedHP: 0
   appliedMP: 0
+  ATKupperLimit: 1.5
+  DEFupperLimit: 1.5
+  AGIupperLimit: 10
   enemySpeed: 1
   checkHit: 0
   gameOver: 0

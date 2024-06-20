@@ -27,6 +27,9 @@ public class PlayerManager : MonoBehaviour
     public float appliedAGI;
     public float appliedHP;
     public float appliedMP;
+    public float ATKupperLimit = 1.5f;
+    public float DEFupperLimit = 1.5f;
+    public float AGIupperLimit = 10f;
     public float enemySpeed = 1f;
     public bool checkHit = false;
     public bool gameOver = false;
@@ -93,6 +96,7 @@ public class PlayerManager : MonoBehaviour
             SP++;
             tempLVP = 0;
         }
+
         levelPoint_text.SetText("point : " + LVP.ToString());
         skillPoint_text.SetText("skill point : " + SP.ToString());
         ATK_point.SetText(playerStatATK.ToString());

@@ -22,6 +22,9 @@ public class UIInteraction : MonoBehaviour
     public Button util1;
     public Button util2;
     public Button util3;
+    public Button ATKPlusBtn;
+    public Button DEFPlusBtn;
+    public Button AGIPlusBtn;
     public Sprite[] skillImages = new Sprite[9];
     public Image[] skillUI = new Image[3];
     public Image[] skillUIAlpha = new Image[3];
@@ -35,7 +38,7 @@ public class UIInteraction : MonoBehaviour
     public void ATKPlus() {
         if (PlayerManager.instance.LVP >= 1) {
             PlayerManager.instance.playerStatATK++;
-            PlayerManager.instance.appliedATK += 0.1f;
+            PlayerManager.instance.appliedATK += 0.05f;
             PlayerManager.instance.LVP--;
         } else {
             notiText.SetText("Not enough LVP");
@@ -45,7 +48,7 @@ public class UIInteraction : MonoBehaviour
     public void DEFPlus() {
         if (PlayerManager.instance.LVP >= 1) {
             PlayerManager.instance.playerStatDEF++;
-            PlayerManager.instance.appliedDEF += 0.05f;
+            PlayerManager.instance.appliedDEF += 0.02f;
             PlayerManager.instance.LVP--;
             player.playerDEF += 0.05f;
         } else {
@@ -271,6 +274,18 @@ public class UIInteraction : MonoBehaviour
             } else {
                 skillDescription.SetText("");
             }
+        }
+
+        if (PlayerManager.instance.appliedATK >= PlayerManager.instance.ATKupperLimit) {
+            ATKPlusBtn.interactable = false;
+        }
+
+        if (PlayerManager.instance.appliedDEF >= PlayerManager.instance.DEFupperLimit) {
+            DEFPlusBtn.interactable = false;
+        }
+
+        if (PlayerManager.instance.appliedAGI >= PlayerManager.instance.AGIupperLimit) {
+            AGIPlusBtn.interactable = false;
         }
     }
 
