@@ -101,8 +101,8 @@ public class GameManager : MonoBehaviour
     {
         _camera            = Camera.main;
         CheckGameStatus();
-        
-        SMapManager.GenerateMapAndPlaceCharacter(ePlayerLocation.Base);
+        SMapManager.playerLocation = ePlayerLocation.Number;
+        //SMapManager.GenerateMapAndPlaceCharacter(ePlayerLocation.Base);
     }
     
     private void Update()
@@ -261,6 +261,10 @@ public class GameManager : MonoBehaviour
             IsBossCleared = false; 
         }
         else if (SMapManager.playerLocation == ePlayerLocation.Base)
+        {
+            
+        }
+        else if (SMapManager.playerLocation == ePlayerLocation.Number)
         {
             
         }
