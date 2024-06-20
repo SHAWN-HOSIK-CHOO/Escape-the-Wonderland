@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -26,6 +27,8 @@ public class Player : MonoBehaviour
     private bool _start = true;
 
     public Light sspotLight;
+    public Slider HP;
+    public Slider MP;
     
     private void Awake() {
         _playerSpriteRenderer = GetComponent<SpriteRenderer>();
@@ -74,7 +77,9 @@ public class Player : MonoBehaviour
         }
 
         playerMaxHp = PlayerManager.instance.appliedHP;
+        HP.value = playerCurrentHp / playerMaxHp;
         playerMaxMp = PlayerManager.instance.appliedMP;
+        MP.value = playerCurrentMp / playerMaxMp;
 
         if (_skill.invincible) {
             playerDEF = 99f;

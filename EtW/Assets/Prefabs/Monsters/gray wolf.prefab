@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Hp: 3
-  moveSpeed: 5
+  moveSpeed: 4
   rotateSpeed: 10
   fiedlOfVision: 15
   enemyATK: 2
