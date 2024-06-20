@@ -61,7 +61,7 @@ public class HitBoxSpawner : MonoBehaviour
         if (_coolDown) {
             _meditationCoolTime -= Time.deltaTime;
             meditationUI.fillAmount = _meditationCoolTime / 5f;
-            Debug.Log(_meditationCoolTime);
+            //Debug.Log(_meditationCoolTime);
             if (_meditationCoolTime <= 0) {
                 meditationUI.fillAmount = 1f;
                 _coolDown = false;
