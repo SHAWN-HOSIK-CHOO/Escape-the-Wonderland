@@ -39,6 +39,7 @@ public class PlayerManager : MonoBehaviour
     private float _feverTimer = 5f;
     private float _realTimer = 1f;
     private bool _statusPanelOpen = false;
+    private int _tempSp = 0;
     public bool start = true;
     public bool notDead = true;
     public bool skillInit = false;
@@ -86,18 +87,23 @@ public class PlayerManager : MonoBehaviour
         playerStatHP = 0;
         playerStatMP = 0;
 
-            appliedATK = 1f + playerStatATK * 0.2f;
-            appliedDEF = 1f + playerStatDEF * 0.05f;
-            appliedAGI = 7f + playerStatAGI * 0.1f;
-            appliedHP = 40f + playerStatHP * 2f;
-            appliedMP = 100f + playerStatMP * 10f;
+        appliedATK = 1f + playerStatATK * 0.2f;
+        appliedDEF = 1f + playerStatDEF * 0.05f;
+        appliedAGI = 7f + playerStatAGI * 0.1f;
+        appliedHP = 40f + playerStatHP * 2f;
+        appliedMP = 100f + playerStatMP * 10f;
     }
 
     void Update()
     {
         if (tempLVP == 20) {
             SP++;
+            _tempSp++;
             tempLVP = 0;
+        }
+
+        if (_tempSp == 3) {
+            tempLVP = 21;
         }
         
         if (start & notDead) {
@@ -114,6 +120,8 @@ public class PlayerManager : MonoBehaviour
             stylishPoint = 0f;
             LVP = 0;
             tempLVP = 0;
+            _tempSp = 0;
+            SP = 0;
             skill_select[0] = "";
             skill_select[1] = "";
             skill_select[2] = "";

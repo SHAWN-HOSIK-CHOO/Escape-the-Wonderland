@@ -35491,6 +35491,14 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5928521068392554905, guid: 9547f00ced05fe84fac4783de1173c4c, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928521068392554905, guid: 9547f00ced05fe84fac4783de1173c4c, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 11750261
+      objectReference: {fileID: 0}
     - target: {fileID: 6670335742086349432, guid: 9547f00ced05fe84fac4783de1173c4c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.262
@@ -54812,6 +54820,10 @@ MonoBehaviour:
   - 
   - 
   judgementCutActivated: 0
+  playerStart: 1
+  start: 1
+  notDead: 1
+  skillInit: 0
   stylishRank: {fileID: 1895714530}
   ui: {fileID: 85982281}
   levelPoint_text: {fileID: 1625649493}
