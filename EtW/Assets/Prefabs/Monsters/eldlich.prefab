@@ -137,9 +137,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Hp: 2
   moveSpeed: 2
-  rotateSpeed: 10
   fiedlOfVision: 15
-  enemyATK: 3
+  enemyATK: 4
   isHit: 0
   animator: {fileID: -6393547438809515776}
   monsterType: 0
