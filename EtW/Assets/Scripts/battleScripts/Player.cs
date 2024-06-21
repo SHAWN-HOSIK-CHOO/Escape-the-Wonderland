@@ -25,7 +25,6 @@ public class Player : MonoBehaviour
     public float reductionRate = 1f;
     private float _godModeTimer = 1f;
     private bool _isHit = false;
-    private bool _start = true;
     private bool _hpRegenerationStart = false;
     private bool _mpRegenerationStart = false;
 
@@ -65,15 +64,16 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (_start) {
-            playerATK = PlayerManager.instance.appliedATK;
-            playerDEF = PlayerManager.instance.appliedDEF * reductionRate;
-            playerAGI = PlayerManager.instance.appliedAGI;
-            playerMaxHp = PlayerManager.instance.appliedHP;
-            playerMaxMp = PlayerManager.instance.appliedMP;
-            playerCurrentHp = playerMaxHp;
-            playerCurrentMp = playerMaxMp;
-            _start = false;
+        if (PlayerManager.instance.playerStart & PlayerManager.instance.notDead) {
+            playerATK = 1f;
+            playerDEF = 1f;
+            playerAGI = 7f;
+            playerMaxHp = 40f;
+            playerMaxMp = 100f;
+            playerCurrentHp = 40f;
+            playerCurrentMp = 100f;
+            reductionRate = 1f;
+            PlayerManager.instance.playerStart = false;
         }
 
         playerMaxHp = PlayerManager.instance.appliedHP;
@@ -95,7 +95,8 @@ public class Player : MonoBehaviour
 
         if (playerCurrentHp <= 0) {
             GameManager.Instance.IsPlayerDead = true;
-            _start = true;
+            playerCurrentHp = playerMaxHp;
+            playerCurrentMp = playerMaxMp;
         }
 
 

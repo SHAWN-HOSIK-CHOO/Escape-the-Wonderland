@@ -283,14 +283,20 @@ public class UIInteraction : MonoBehaviour
 
         if (PlayerManager.instance.appliedATK >= PlayerManager.instance.ATKupperLimit) {
             ATKPlusBtn.interactable = false;
+        } else {
+            ATKPlusBtn.interactable = true;
         }
 
         if (PlayerManager.instance.appliedDEF >= PlayerManager.instance.DEFupperLimit) {
             DEFPlusBtn.interactable = false;
+        } else {
+            DEFPlusBtn.interactable = true;
         }
 
         if (PlayerManager.instance.appliedAGI >= PlayerManager.instance.AGIupperLimit) {
             AGIPlusBtn.interactable = false;
+        } else {
+            AGIPlusBtn.interactable = true;
         }
     }
 

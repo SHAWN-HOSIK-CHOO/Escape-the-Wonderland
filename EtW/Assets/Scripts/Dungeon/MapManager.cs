@@ -94,6 +94,8 @@ public class MapManager : MonoBehaviour
         //TODO: 맵 구조에 맞춰서 스폰 위치 설정 필요
         baseMapHolder.SetActive(true);
         GameManager.SPlayer.transform.position = Vector3.zero;
+        PlayerManager.instance.playerStart = true;
+        PlayerManager.instance.start = true;
         Debug.Log("Current floor count called from base : " + CurrentDungeonFloorCount);
     }
 

@@ -35,9 +35,12 @@ public class PlayerManager : MonoBehaviour
     public bool gameOver = false;
     public string[] skill_select = new string[]{"", "", ""};
     public bool judgementCutActivated = false;
+    public bool playerStart = true;
     private float _feverTimer = 5f;
     private float _realTimer = 1f;
     private bool _statusPanelOpen = false;
+    public bool start = true;
+    public bool notDead = true;
 
     [SerializeField]
     private TextMeshProUGUI stylishRank;
@@ -82,11 +85,11 @@ public class PlayerManager : MonoBehaviour
         playerStatHP = 0;
         playerStatMP = 0;
 
-        appliedATK = 1f + playerStatATK * 0.2f;
-        appliedDEF = 1f + playerStatDEF * 0.05f;
-        appliedAGI = 7f + playerStatAGI * 0.1f;
-        appliedHP = 40f + playerStatHP * 2f;
-        appliedMP = 100f + playerStatMP * 10f;
+            appliedATK = 1f + playerStatATK * 0.2f;
+            appliedDEF = 1f + playerStatDEF * 0.05f;
+            appliedAGI = 7f + playerStatAGI * 0.1f;
+            appliedHP = 40f + playerStatHP * 2f;
+            appliedMP = 100f + playerStatMP * 10f;
     }
 
     void Update()
@@ -95,6 +98,24 @@ public class PlayerManager : MonoBehaviour
             SP++;
             tempLVP = 0;
         }
+        
+        if (start & notDead) {
+            playerStatAGI = 0;
+            playerStatATK = 0;
+            playerStatDEF = 0;
+            playerStatHP = 0;
+            playerStatMP = 0;
+            appliedATK = 1f + playerStatATK * 0.2f;
+            appliedDEF = 1f + playerStatDEF * 0.05f;
+            appliedAGI = 7f + playerStatAGI * 0.1f;
+            appliedHP = 40f + playerStatHP * 2f;
+            appliedMP = 100f + playerStatMP * 10f;
+            stylishPoint = 0f;
+            LVP = 0;
+            tempLVP = 0;
+            start = false;
+        }
+
 
         levelPoint_text.SetText("point : " + LVP.ToString());
         skillPoint_text.SetText("skill point : " + SP.ToString());

@@ -402,9 +402,11 @@ public class GameManager : MonoBehaviour
         SMapManager.roomDungeonGen.roamablePositions.Clear();
         SMapManager.roomDungeonGen.allWallPositions.Clear();
         SMapManager.CurrentDungeonFloorCount = 0;
+        PlayerManager.instance.notDead = false;
         SMapManager.GenerateMapAndPlaceCharacter(SMapManager.playerLocation);
         StartCoroutine(DisplayRabbitMsg("야 잘 좀 해봐...... 그래가지고 탈출 할 수 있겠어?", 3.0f));
         IsPlayerDead = false;
+        PlayerManager.instance.notDead = true;
     }
 
     // 외부 클래스에서 부르는 용도
