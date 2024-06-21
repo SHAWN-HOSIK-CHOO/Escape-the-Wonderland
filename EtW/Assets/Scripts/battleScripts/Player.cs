@@ -9,7 +9,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Animator animator;
     private Rigidbody2D _playerRigidbody;
-    private Vector2 _vector;
     private SpriteRenderer _playerSpriteRenderer;
     private BoxCollider2D _playerCollider;
     private Skill _skill;
@@ -73,6 +72,9 @@ public class Player : MonoBehaviour
             playerCurrentHp = 40f;
             playerCurrentMp = 100f;
             reductionRate = 1f;
+            _skill.firstSkillActivated = false;
+            _skill.secondSkillActivated = false;
+            _skill.thirdSkillActivated = false;
             PlayerManager.instance.playerStart = false;
         }
 

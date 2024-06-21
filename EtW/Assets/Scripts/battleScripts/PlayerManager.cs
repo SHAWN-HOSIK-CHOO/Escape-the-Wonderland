@@ -41,6 +41,7 @@ public class PlayerManager : MonoBehaviour
     private bool _statusPanelOpen = false;
     public bool start = true;
     public bool notDead = true;
+    public bool skillInit = false;
 
     [SerializeField]
     private TextMeshProUGUI stylishRank;
@@ -113,6 +114,9 @@ public class PlayerManager : MonoBehaviour
             stylishPoint = 0f;
             LVP = 0;
             tempLVP = 0;
+            skill_select[0] = "";
+            skill_select[1] = "";
+            skill_select[2] = "";
             start = false;
         }
 

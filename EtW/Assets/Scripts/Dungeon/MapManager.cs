@@ -96,6 +96,7 @@ public class MapManager : MonoBehaviour
         GameManager.SPlayer.transform.position = Vector3.zero;
         PlayerManager.instance.playerStart = true;
         PlayerManager.instance.start = true;
+        PlayerManager.instance.skillInit = true;
         Debug.Log("Current floor count called from base : " + CurrentDungeonFloorCount);
     }
 

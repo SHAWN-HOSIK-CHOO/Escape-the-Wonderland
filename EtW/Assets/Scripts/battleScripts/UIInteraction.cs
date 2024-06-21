@@ -27,6 +27,7 @@ public class UIInteraction : MonoBehaviour
     public Button DEFPlusBtn;
     public Button AGIPlusBtn;
     public Sprite[] skillImages = new Sprite[9];
+    public Sprite defaultImage;
     public Image[] skillUI = new Image[3];
     public Image[] skillUIAlpha = new Image[3];
     public Player player;
@@ -98,7 +99,9 @@ public class UIInteraction : MonoBehaviour
             PlayerManager.instance.SP--;
             skillUIAlpha[0].gameObject.SetActive(true);
             skillUI[0].sprite = skillImages[0];
+            skillUI[0].color = new Color(255, 255, 255, 1);
             skillUIAlpha[0].sprite = skillImages[0];
+            skillUIAlpha[0].color = new Color(255, 255, 255, 1);
             skillManager.firstSkillActivated = true;
             attack1.interactable = false;
             defense1.interactable = false;
@@ -117,7 +120,9 @@ public class UIInteraction : MonoBehaviour
             PlayerManager.instance.SP--;
             skillUIAlpha[1].gameObject.SetActive(true);
             skillUI[1].sprite = skillImages[1];
+            skillUI[1].color = new Color(255, 255, 255, 1);
             skillUIAlpha[1].sprite = skillImages[1];
+            skillUIAlpha[1].color = new Color(255, 255, 255, 1);
             skillManager.secondSkillActivated = true;
             attack2.interactable = false;
             defense2.interactable = false;
@@ -137,7 +142,9 @@ public class UIInteraction : MonoBehaviour
             PlayerManager.instance.SP--;
             skillUIAlpha[2].gameObject.SetActive(true);
             skillUI[2].sprite = skillImages[2];
+            skillUI[2].color = new Color(255, 255, 255, 1);
             skillUIAlpha[2].sprite = skillImages[2];
+            skillUIAlpha[2].color = new Color(255, 255, 255, 1);
             skillManager.thirdSkillActivated = true;
             attack3.interactable = false;
             defense3.interactable = false;
@@ -153,7 +160,9 @@ public class UIInteraction : MonoBehaviour
             PlayerManager.instance.SP--;
             skillUIAlpha[0].gameObject.SetActive(true);
             skillUI[0].sprite = skillImages[3];
+            skillUI[0].color = new Color(255, 255, 255, 1);
             skillUIAlpha[0].sprite = skillImages[3];
+            skillUIAlpha[0].color = new Color(255, 255, 255, 1);
             skillManager.firstSkillActivated = true;
             attack1.interactable = false;
             defense1.interactable = false;
@@ -172,7 +181,9 @@ public class UIInteraction : MonoBehaviour
             PlayerManager.instance.SP--;
             skillUIAlpha[1].gameObject.SetActive(true);
             skillUI[1].sprite = skillImages[4];
+            skillUI[1].color = new Color(255, 255, 255, 1);
             skillUIAlpha[1].sprite = skillImages[4];
+            skillUIAlpha[1].color = new Color(255, 255, 255, 1);
             skillManager.secondSkillActivated = true;
             attack2.interactable = false;
             defense2.interactable = false;
@@ -191,7 +202,9 @@ public class UIInteraction : MonoBehaviour
             PlayerManager.instance.SP--;
             skillUIAlpha[2].gameObject.SetActive(true);
             skillUI[2].sprite = skillImages[5];
+            skillUI[2].color = new Color(255, 255, 255, 1);
             skillUIAlpha[2].sprite = skillImages[5];
+            skillUIAlpha[2].color = new Color(255, 255, 255, 1);
             skillManager.thirdSkillActivated = true;
             attack3.interactable = false;
             defense3.interactable = false;
@@ -207,7 +220,9 @@ public class UIInteraction : MonoBehaviour
             PlayerManager.instance.SP--;
             skillUIAlpha[0].gameObject.SetActive(true);
             skillUI[0].sprite = skillImages[6];
+            skillUI[0].color = new Color(255, 255, 255, 1);
             skillUIAlpha[0].sprite = skillImages[6];
+            skillUIAlpha[0].color = new Color(255, 255, 255, 1);
             skillManager.firstSkillActivated = true;
             attack1.interactable = false;
             defense1.interactable = false;
@@ -226,7 +241,9 @@ public class UIInteraction : MonoBehaviour
             PlayerManager.instance.SP--;
             skillUIAlpha[1].gameObject.SetActive(true);
             skillUI[1].sprite = skillImages[7];
+            skillUI[1].color = new Color(255, 255, 255, 1);
             skillUIAlpha[1].sprite = skillImages[7];
+            skillUIAlpha[1].color = new Color(255, 255, 255, 1);
             skillManager.secondSkillActivated = true;
             attack2.interactable = false;
             defense2.interactable = false;
@@ -245,7 +262,9 @@ public class UIInteraction : MonoBehaviour
             PlayerManager.instance.SP--;
             skillUIAlpha[2].gameObject.SetActive(true);
             skillUI[2].sprite = skillImages[8];
+            skillUI[2].color = new Color(255, 255, 255, 1);
             skillUIAlpha[2].sprite = skillImages[8];
+            skillUIAlpha[2].color = new Color(255, 255, 255, 1);
             skillManager.thirdSkillActivated = true;
             attack3.interactable = false;
             defense3.interactable = false;
@@ -279,6 +298,31 @@ public class UIInteraction : MonoBehaviour
             } else {
                 skillDescription.SetText("");
             }
+        }
+
+        if (PlayerManager.instance.skillInit & PlayerManager.instance.notDead) {
+            attack1.interactable = true;
+            attack2.interactable = false;
+            attack3.interactable = false;
+            defense1.interactable = true;
+            defense2.interactable = false;
+            defense3.interactable = false;
+            util1.interactable = true;
+            util2.interactable = false;
+            util3.interactable = false;
+            skillUI[0].sprite = null;
+            skillUI[1].sprite = null;
+            skillUI[2].sprite = null;
+            skillUIAlpha[0].sprite = null;
+            skillUIAlpha[1].sprite = null;
+            skillUIAlpha[2].sprite = null;
+            foreach (Image skillUI in skillUI) {
+                skillUI.color = new Color(255, 255, 255, 0);
+            }
+            foreach (Image skillUI in skillUIAlpha) {
+                skillUI.color = new Color(255, 255, 255, 0);
+            }
+            PlayerManager.instance.skillInit = false;
         }
 
         if (PlayerManager.instance.appliedATK >= PlayerManager.instance.ATKupperLimit) {
