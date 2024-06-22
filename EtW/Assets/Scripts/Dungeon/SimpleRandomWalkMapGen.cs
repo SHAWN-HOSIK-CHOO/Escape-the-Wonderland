@@ -1,6 +1,6 @@
 /*
- * Source Code Originally by SunnyValleyStudio
- * Modified for usage by Ho-Sik Choo
+ * CopyRight @2020 SunnyValleyStudio
+ * Modified for University Project by Ho-Sik Choo
  */
 using System.Collections;
 using System.Collections.Generic;

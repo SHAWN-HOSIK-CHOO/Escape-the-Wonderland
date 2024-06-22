@@ -110,11 +110,12 @@ public class GameManager : MonoBehaviour
         _camera            = Camera.main;
         CheckGameStatus();
         SMapManager.playerLocation = ePlayerLocation.Number; // NONE
-        //SMapManager.GenerateMapAndPlaceCharacter(ePlayerLocation.Base);
     }
     
     private void Update()
     {
+        
+#if UNITY_EDITOR
         //TODO: ERASE
         //Debug Codes-------------------------------------------
         if (Input.GetKeyDown(KeyCode.Z))
@@ -141,6 +142,7 @@ public class GameManager : MonoBehaviour
         }
         // Debug Codes end----------------------------------------
         //TODO: ERASE
+#endif
         
         if (isAllPassClear && shouldPlayEnding)
         {
@@ -158,7 +160,8 @@ public class GameManager : MonoBehaviour
 
     private void ProcessInput()
     {
-        if (Input.GetKeyDown(KeyCode.M))
+        if ((SMapManager.playerLocation is ePlayerLocation.Dungeon0 or ePlayerLocation.Dungeon1 or ePlayerLocation.Dungeon2 or ePlayerLocation.Dungeon3) &&
+            Input.GetKeyDown(KeyCode.M))
         {
             DungeonQuestManager.Instance.OpenQuestUI();
         }

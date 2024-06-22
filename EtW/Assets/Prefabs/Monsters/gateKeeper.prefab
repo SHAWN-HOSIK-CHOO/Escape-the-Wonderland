@@ -138,7 +138,7 @@ MonoBehaviour:
   Hp: 12
   moveSpeed: 3
   fiedlOfVision: 15
-  enemyATK: 4
+  enemyATK: 2.5
   isHit: 0
   animator: {fileID: -6393547438809515776}
   monsterType: 1

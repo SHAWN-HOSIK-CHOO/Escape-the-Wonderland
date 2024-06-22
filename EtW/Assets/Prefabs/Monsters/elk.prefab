@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 11750261
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: -208388664, guid: 89a49571a87f9464ba7471338308743c, type: 3}
+  m_Sprite: {fileID: -156165633, guid: 89a49571a87f9464ba7471338308743c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -120,9 +120,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.003253405, y: -0.38648155}
+  m_Offset: {x: 0.003253405, y: -0.64741594}
   serializedVersion: 2
-  m_Radius: 0.72056085
+  m_Radius: 0.4596261
 --- !u!114 &-2806726030534616836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,7 +138,7 @@ MonoBehaviour:
   Hp: 8
   moveSpeed: 3
   fiedlOfVision: 15
-  enemyATK: 3
+  enemyATK: 2
   isHit: 0
   animator: {fileID: -6393547438809515776}
   monsterType: 0
