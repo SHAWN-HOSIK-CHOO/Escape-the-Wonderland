@@ -1,4 +1,4 @@
-University Term Project  </br>
+University Project  </br>
 수업명 : 게임프로그래밍언어  </br>
 이 프로젝트는 Unity 엔진의 사용법을 익히기 위한 학습 목적으로 진행되었습니다.
 ## 스토리 / 던전 
