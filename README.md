@@ -1,4 +1,7 @@
-University Term Project from Hanyang-ERICA 2024-1
-(Lecture : Game Programming Language)
+University Term Project 
+수업명 : 게임프로그래밍언어
+## 스토리 / 던전 
+플레이어는 토끼를 쫓다가 우연히 던전에 들어서게 됩니다. 던전은 절차적 콘텐츠 생성(PCG) 방식을 통해 생성되며, Sunvalley Studio의 알고리즘과 에셋을 참고하여 프로젝트에 맞게 수정·적용했습니다.
+플레이어는 각 층마다 다음 던전으로 가는 포털을 찾거나 '게이트키퍼' 몬스터를 처치하며 점차 던전의 정상으로 나아가야 합니다. 정상에는 보스 몬스터가 기다리고 있으며, 총 네 가지의 던전을 클리어하면 원래 세계로 돌아갈 수 있습니다.
+## 전투
 
-ESCAPE THE WONDERLAND is a 2D pixel based RPG inspired by Alice in Wonderland
